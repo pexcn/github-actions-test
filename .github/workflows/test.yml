@@ -9,12 +9,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Test
-        run: echo "test222222222222" > test2.txt
+        run: echo "test222222222222" > test22.txt
       - name: Release
         uses: technote-space/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           name: Test
-          files: test2.txt
-          update-draft-flag: true
+          files: test22.txt

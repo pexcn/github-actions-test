@@ -17,3 +17,4 @@ jobs:
         with:
           name: Test
           files: test2.txt
+          update_draft_flag: true

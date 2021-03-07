@@ -11,7 +11,7 @@ jobs:
       - name: Test
         run: echo "test222222222222" > test2.txt
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: technote-space/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:

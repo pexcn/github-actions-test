@@ -13,7 +13,7 @@ jobs:
       TZ: Asia/Taipei
       VERBOSE_LOG: ${{ github.event.inputs.verbose_log }}
       OPENWRT_CONFIG_ARCH: ${{ matrix.ARCH }}
-      OPENWRT_CONFIG_URL: https://raw.githubusercontent.com/$GITHUB_REPOSITORY/${GITHUB_REF##*/}/${{ matrix.ARCH }}
+      OPENWRT_CONFIG_URL: https://raw.githubusercontent.com/${{ github.repository }}/openwrt-19.07/${{ matrix.ARCH }}
     strategy:
       fail-fast: false
       matrix:

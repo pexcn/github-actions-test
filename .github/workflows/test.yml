@@ -13,7 +13,7 @@ jobs:
         run: |
           echo "1" > test1.txt
           echo "22" > test2.txt
-          echo "33" > test3.txt
+          echo "333" > test3.txt
       - name: Release
         uses: ncipollo/release-action@v1
         with:

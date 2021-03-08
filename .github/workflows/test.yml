@@ -15,5 +15,6 @@ jobs:
       - name: Release
         uses: ncipollo/release-action@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}          
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit: master
           artifacts: test1.txt

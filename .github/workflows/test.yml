@@ -11,7 +11,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Test
         run: |
-          echo "11" > test1.txt
+          echo "111" > test1.txt
       - name: Release
         uses: ncipollo/release-action@v1
         with:
@@ -19,7 +19,7 @@ jobs:
           allowUpdates: true
           tag: master
           commit: ${{ env.GITHUB_SHA }}
-          artifacts: test1.txt
+          artifacts: test1.txt, test1.txt
 
 
 

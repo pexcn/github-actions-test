@@ -14,8 +14,7 @@ jobs:
           echo "1" > test1.txt
       - name: Release
         uses: ncipollo/release-action@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           name: Test1
-          artifacts: test1
+          token: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: test1.txt

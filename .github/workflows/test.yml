@@ -18,4 +18,5 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdates: true
           tag: master
+          commit: ${{ env.GITHUB_SHA }}
           artifacts: test1.txt

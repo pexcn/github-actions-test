@@ -6,27 +6,11 @@ on: push
 jobs:
   build:
     runs-on: ubuntu-20.04
+    container:
+      image: pexcn/docker-images:buster-openwrt
+      #options: --user builder
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Test
         run: |
-          echo "1" > test1.txt
-          echo "22" > test2.txt
-          echo "333" > test3.txt
-      - name: Release
-        uses: ncipollo/release-action@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          allowUpdates: true
-          tag: master
-          artifacts: test1.txt, test2.txt, test3.txt
-
-
-
-
-
-
-
-
-

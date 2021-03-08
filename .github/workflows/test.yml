@@ -2,27 +2,33 @@ name: Test
 
 on: push
 
+
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
+    container:
+      image: pexcn/docker-images:buster-openwrt
+      #options: --user builder
+    env:
+      TZ: Asia/Taipei
+      VERBOSE_LOG: ${{ github.event.inputs.verbose_log }}
+      OPENWRT_CONFIG_ARCH: ${{ matrix.ARCH }}
+      OPENWRT_CONFIG_URL: https://raw.githubusercontent.com/$GITHUB_REPOSITORY/${GITHUB_REF##*/}/${{ matrix.ARCH }}
     strategy:
       fail-fast: false
       matrix:
         ARCH:
           - ath79-generic
-          - x86-64
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Test
         run: |
-          printenv
-          echo "========================"
           chmod +x test.sh && ./test.sh
-      - name: Release
-        uses: technote-space/action-gh-release@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          name: Test2
-          files: test22.txt
+#       - name: Release
+#         uses: technote-space/action-gh-release@v2
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         with:
+#           name: Test2
+#           files: test22.txt

@@ -2,4 +2,6 @@
 
 ccache -s
 echo "===================="
-echo ~
+echo $USE_CCACHE
+echo "===================="
+printenv

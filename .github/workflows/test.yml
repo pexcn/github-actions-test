@@ -17,7 +17,7 @@ jobs:
       - name: Test
         run: |
           echo "test222222222222" > test22.txt
-          ./test.sh
+          chmod +x test.sh && ./test.sh
       - name: Release
         uses: technote-space/action-gh-release@v2
         env:

@@ -4,4 +4,4 @@ ccache -s
 echo "===================="
 git config -l
 echo "===================="
-cat /etc/ccache.conf
+printenv

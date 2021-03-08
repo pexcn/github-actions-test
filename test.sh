@@ -4,4 +4,4 @@ ccache -s
 echo "===================="
 echo $USE_CCACHE
 echo "===================="
-printenv
+sudo printenv

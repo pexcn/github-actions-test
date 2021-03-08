@@ -16,7 +16,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Test
         run: |
-          echo "test222222222222" > test22.txt
+          printenv
+          echo "========================"
           chmod +x test.sh && ./test.sh
       - name: Release
         uses: technote-space/action-gh-release@v2

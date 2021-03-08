@@ -11,15 +11,16 @@ jobs:
         uses: actions/checkout@v2
       - name: Test
         run: |
-          echo "111" > test1.txt
+          echo "1" > test1.txt
+          echo "22" > test2.txt
+          echo "33" > test3.txt
       - name: Release
         uses: ncipollo/release-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdates: true
           tag: master
-          commit: ${{ env.GITHUB_SHA }}
-          artifacts: test1.txt, test1.txt
+          artifacts: test1.txt, test2.txt, test3.txt
 
 
 

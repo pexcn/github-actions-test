@@ -2,6 +2,6 @@
 
 ccache -s
 echo "===================="
-echo $USE_CCACHE
+git config -l
 echo "===================="
-sudo printenv
+printenv

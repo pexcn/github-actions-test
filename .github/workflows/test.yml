@@ -17,4 +17,5 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit: master
+          tag: master
           artifacts: test1.txt

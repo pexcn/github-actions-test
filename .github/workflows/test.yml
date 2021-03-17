@@ -11,4 +11,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Test
-        run: chmod +x ./test.sh && ./test.sh
+        run: df -h && pwd && whoami

@@ -11,4 +11,5 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Test
+        if: "!startsWith(github.event.head_commit.message, 'WIP')"
         run: df -h && pwd && whoami

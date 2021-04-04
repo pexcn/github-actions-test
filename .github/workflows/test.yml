@@ -16,4 +16,3 @@ jobs:
         #if: "!startsWith(github.event.head_commit.message, 'ci skip')"
         run: |
           echo ${{ github.event.head_commit.message }}
-

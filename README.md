@@ -1,5 +1,5 @@
 # github-actions-test
 
-环境变量 | 默认值 | 可选值 | 说明
----------|:------:|:------:|-----
-`TFO_COMPAT`| | `1` | 是否兼容旧内核的 TCP Fast Open
+Environment variable | Default value | Optional value | Description
+---------------------|:-------------:|:--------------:|------------
+`TFO_COMPAT`| | `1` | Whether to enable TCP Fast Open compatible for old kernel

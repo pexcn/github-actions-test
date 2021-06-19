@@ -20,7 +20,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Run build
-        run: ./test.sh
+        run: sh ./test.sh
       - name: Upload to Artifact
         uses: actions/upload-artifact@v2
         with:

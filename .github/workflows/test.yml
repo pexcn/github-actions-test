@@ -13,8 +13,8 @@ env:
 jobs:
   build:
     runs-on: ubuntu-20.04
-    container:
-      image: pexcn/docker-images:buster-openwrt
+#    container:
+#      image: pexcn/docker-images:buster-openwrt
       #options: --user builder
     steps:
       - name: Run build

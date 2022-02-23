@@ -12,7 +12,7 @@ jobs:
       TZ: Asia/Taipei
 
     steps:
-      - name: Free Up More Space
+      - name: Maximize build disk space
         uses: easimon/maximize-build-space@master
         with:
           root-reserve-mb: 256

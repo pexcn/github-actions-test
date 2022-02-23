@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - name: Maximize build disk space
-        uses: easimon/maximize-build-space@master
+        uses: pexcn/maximize-build-space@master
         with:
           root-reserve-mb: 256
           swap-size-mb: 1024

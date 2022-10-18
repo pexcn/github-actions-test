@@ -27,7 +27,7 @@ jobs:
         include:
           # shadowsocks-rust
           - BUILD_CONTEXT: net/shadowsocks-rust
-            TARGET_PLATFORMS: linux/amd64,linux/arm64
+            TARGET_PLATFORMS: linux/amd64
 
     steps:
       # prepare

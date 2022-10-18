@@ -41,13 +41,13 @@ jobs:
         run: |
           echo "BUILD_TAG=$(basename ${{ matrix.BUILD_CONTEXT }})" >> $GITHUB_ENV
 
-      # login
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GHCR_PAT }}
+      ## login
+      #- name: Login to GitHub Container Registry
+      #  uses: docker/login-action@v2
+      #  with:
+      #    registry: ghcr.io
+      #    username: ${{ github.repository_owner }}
+      #    password: ${{ secrets.GHCR_PAT }}
 
       # cache
       - name: Cache Docker layers

@@ -7,9 +7,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
-    container:
-      image: pexcn/docker-images:buster-openwrt
-      options: --privileged
+    #container:
+    #  image: pexcn/docker-images:buster-openwrt
+    #  options: --privileged
     env:
       TZ: Asia/Taipei
       BUILD_PROFILE: ${{ matrix.PROFILE }}

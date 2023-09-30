@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-22.04
     container:
       image: pexcn/docker-images:buster-openwrt
-      options: --user root --privileged
+      options: --privileged
     env:
       TZ: Asia/Taipei
       BUILD_PROFILE: ${{ matrix.PROFILE }}
@@ -32,7 +32,7 @@ jobs:
       - name: Maximize build space
         uses: easimon/maximize-build-space@master
         with:
-          root-reserve-mb: 45056
+          root-reserve-mb: 4505
           swap-size-mb: 4096
           remove-dotnet: true
           remove-android: true

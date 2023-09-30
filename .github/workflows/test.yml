@@ -15,6 +15,7 @@ jobs:
         - /usr/share/dotnet:/usr/share/dotnet
         - /opt/ghc:/opt/ghc
         - /opt/hostedtoolcache/CodeQL:/opt/hostedtoolcache/CodeQL
+        - /var/run/docker.sock:/var/run/docker.sock
     env:
       TZ: Asia/Taipei
       BUILD_PROFILE: ${{ matrix.PROFILE }}
@@ -36,7 +37,24 @@ jobs:
 
       - name: Maximize build space
         run: |
-          sudo find /usr/local/lib/android /usr/share/dotnet /opt/ghc /opt/hostedtoolcache/CodeQL -mindepth 1 -delete
+          export DOCKER_VERSION=24.0.2
+          case "$(dpkg --print-architecture)" in \
+            amd64) arch="x86_64";; \
+            *) arch="aarch64";; \
+          esac && curl https://download.docker.com/linux/static/stable/${arch}/docker-${DOCKER_VERSION}.tgz | \
+            tar zxv -C /usr/local/bin/ docker/docker --strip-components 1
+          sudo find /usr/local/lib/android -mindepth 1 -delete
+          sudo find /usr/share/dotnet -mindepth 1 -delete
+          sudo find /opt/ghc -mindepth 1 -delete
+          sudo find /opt/hostedtoolcache/CodeQL -mindepth 1 -delete
+          docker ps -a || true
+          docker image ls || true
+          docker container ls || true
+          docker volume ls || true
+          docker network ls || true
+          docker image prune -af || true
+          docker container prune -f || true
+          docker volume prune -f || true
 
       - name: Run
         run: |

@@ -10,6 +10,11 @@ jobs:
     container:
       image: pexcn/docker-images:buster-openwrt
       #options: --user root --privileged
+      volumes:
+        - /usr/local/lib/android:/usr/local/lib/android
+        - /usr/share/dotnet:/usr/share/dotnet
+        - /opt/ghc:/opt/ghc
+        - /opt/hostedtoolcache/CodeQL:/opt/hostedtoolcache/CodeQL
     env:
       TZ: Asia/Taipei
       BUILD_PROFILE: ${{ matrix.PROFILE }}

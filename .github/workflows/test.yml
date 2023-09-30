@@ -32,7 +32,7 @@ jobs:
         if: github.event_name == 'push'
         uses: ncipollo/release-action@v1
         with:
-          tag: ${{ env.GITHUB_REF_NAME }}
+          tag: master
           allowUpdates: true
           artifacts: ${{ env.BUILD_PROFILE }}.tar.gz
           token: ${{ secrets.GITHUB_TOKEN }}

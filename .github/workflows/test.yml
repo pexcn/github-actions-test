@@ -36,10 +36,7 @@ jobs:
 
       - name: Maximize build space
         run: |
-          sudo find /usr/local/lib/android -mindepth 1 -delete
-          sudo find /usr/share/dotnet -mindepth 1 -delete
-          sudo find /opt/ghc -mindepth 1 -delete
-          sudo find /opt/hostedtoolcache/CodeQL -mindepth 1 -delete
+          sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc /opt/hostedtoolcache/CodeQL
 
       - name: Run
         run: |

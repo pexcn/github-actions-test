@@ -34,8 +34,12 @@ jobs:
         run: |
           df -Th
 
-      - name: Run
-        run: ls -al /opt/hostedtoolcache/
+      - name: Maximize build space
+        run: |
+          sudo find /usr/local/lib/android -mindepth 1 -delete
+          sudo find /usr/share/dotnet -mindepth 1 -delete
+          sudo find /opt/ghc -mindepth 1 -delete
+          sudo find /opt/hostedtoolcache/CodeQL -mindepth 1 -delete
 
       - name: Run
         run: |

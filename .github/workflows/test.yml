@@ -42,19 +42,19 @@ jobs:
             amd64) arch="x86_64";; \
             *) arch="aarch64";; \
           esac && curl https://download.docker.com/linux/static/stable/${arch}/docker-${DOCKER_VERSION}.tgz | \
-            tar zxv -C /usr/local/bin/ docker/docker --strip-components 1
+            sudo tar zxv -C /usr/local/bin/ docker/docker --strip-components 1
           sudo find /usr/local/lib/android -mindepth 1 -delete
           sudo find /usr/share/dotnet -mindepth 1 -delete
           sudo find /opt/ghc -mindepth 1 -delete
           sudo find /opt/hostedtoolcache/CodeQL -mindepth 1 -delete
-          docker ps -a || true
-          docker image ls || true
-          docker container ls || true
-          docker volume ls || true
-          docker network ls || true
-          docker image prune -af || true
-          docker container prune -f || true
-          docker volume prune -f || true
+          sudo docker ps -a || true
+          sudo docker image ls || true
+          sudo docker container ls || true
+          sudo docker volume ls || true
+          sudo docker network ls || true
+          sudo docker image prune -af || true
+          sudo docker container prune -f || true
+          sudo docker volume prune -f || true
 
       - name: Run
         run: |

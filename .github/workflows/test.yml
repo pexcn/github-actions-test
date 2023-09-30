@@ -27,6 +27,7 @@ jobs:
       - name: Run
         run: |
           echo $(date) > ${BUILD_PROFILE}.tar.gz
+          echo
 
       - name: Upload to Releases
         if: github.event_name == 'push'

@@ -9,7 +9,6 @@ jobs:
     runs-on: ubuntu-22.04
     container:
       image: pexcn/docker-images:buster-openwrt
-      #options: --user root --privileged
       volumes:
         - /usr/local/lib/android:/usr/local/lib/android
         - /usr/share/dotnet:/usr/share/dotnet
@@ -33,28 +32,25 @@ jobs:
 
       - name: Run
         run: |
-          df -Th
+          df -h
 
       - name: Maximize build space
         run: |
-          export DOCKER_VERSION=24.0.2
-          case "$(dpkg --print-architecture)" in \
-            amd64) arch="x86_64";; \
-            *) arch="aarch64";; \
-          esac && curl https://download.docker.com/linux/static/stable/${arch}/docker-${DOCKER_VERSION}.tgz | \
-            sudo tar zxv -C /usr/local/bin/ docker/docker --strip-components 1
+          # remove unnecessary software
           sudo find /usr/local/lib/android -mindepth 1 -delete
           sudo find /usr/share/dotnet -mindepth 1 -delete
           sudo find /opt/ghc -mindepth 1 -delete
           sudo find /opt/hostedtoolcache/CodeQL -mindepth 1 -delete
-          sudo docker ps -a || true
-          sudo docker image ls || true
-          sudo docker container ls || true
-          sudo docker volume ls || true
-          sudo docker network ls || true
-          sudo docker image prune -af || true
-          sudo docker container prune -f || true
-          sudo docker volume prune -f || true
+          # remove docker images
+          download_docker_binary() {
+            local docker_version="24.0.6"
+            local arch="x86_64"
+            [ "$(dpkg --print-architecture)" = "amd64" ] || arch="aarch64"
+            curl https://download.docker.com/linux/static/stable/${arch}/docker-${docker_version}.tgz | \
+              sudo tar zxv -C /usr/local/bin/ docker/docker --strip-components 1
+          }
+          download_docker_binary
+          sudo docker image prune -af
 
       - name: Run
         run: |

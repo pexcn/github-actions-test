@@ -31,9 +31,9 @@ jobs:
 
       - name: Upload to Releases
         if: github.event_name == 'push'
-        uses: ncipollo/release-action@v1
+        uses: softprops/action-gh-release@v1
         with:
-          tag: master
-          allowUpdates: true
-          artifacts: ${{ env.BUILD_PROFILE }}.tar.gz
-          token: ${{ secrets.GITHUB_TOKEN }}
+          #name:
+          #tag_name:
+          files: ${{ env.BUILD_PROFILE }}.tar.gz
+          #token: ${{ secrets.GITHUB_TOKEN }}

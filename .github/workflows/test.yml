@@ -28,6 +28,20 @@ jobs:
         run: |
           df -Th
 
+      - name: Maximize build space
+        uses: easimon/maximize-build-space@master
+        with:
+          root-reserve-mb: 45056
+          swap-size-mb: 4096
+          remove-dotnet: true
+          remove-android: true
+          remove-haskell: true
+          remove-codeql: true
+
+      - name: Run
+        run: |
+          df -Th
+
       - name: Upload to Releases
         if: github.event_name == 'push'
         uses: softprops/action-gh-release@v1

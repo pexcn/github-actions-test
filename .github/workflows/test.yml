@@ -25,4 +25,4 @@ jobs:
           submodules: true
 
       - name: Run
-        run: echo $GITHUB_REPOSITORY_OWNER
+        run: echo ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY_OWNER}/openwrt-ipq60xx.git

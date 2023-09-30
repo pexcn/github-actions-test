@@ -1,40 +1,28 @@
-name: CI
+name: Build
 
 on:
   push:
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-22.04
+    container:
+      image: pexcn/docker-images:buster-openwrt
     env:
       TZ: Asia/Taipei
+      BUILD_PROFILE: ${{ matrix.PROFILE }}
     strategy:
       fail-fast: false
       matrix:
-        include:
-          # shadowsocks-rust
-          - BUILD_CONTEXT: net/shadowsocks-rust
-            TARGET_PLATFORMS: linux/amd64,linux/arm64
+        PROFILE:
+          - ipq60xx-generic
+
     steps:
-      # prepare
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
         with:
-          #image: tonistiigi/binfmt:master@sha256:c6fd7794c689f9144fddd93cb8cbc39a141aec5aa853df0849315e8f62a0dfa2
-          platforms: linux/amd64,linux/arm64
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-      - name: Set environment variables
-        run: |
-          echo "BUILD_TAG=$(basename ${{ matrix.BUILD_CONTEXT }})" >> $GITHUB_ENV
+          submodules: true
 
-      # build
-      - name: Build image
-        uses: docker/build-push-action@v3
-        with:
-          context: ${{ matrix.BUILD_CONTEXT }}
-          tags: |
-            ${{ github.repository }}:${{ env.BUILD_TAG }}
-          platforms: ${{ matrix.TARGET_PLATFORMS }}
+      - name: Run
+        run: echo $GITHUB_REPOSITORY_OWNER

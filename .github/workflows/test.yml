@@ -34,5 +34,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           #name:
-          #tag_name: master
+          tag_name: master
           files: ${{ env.BUILD_PROFILE }}.tar.gz
+          generate_release_notes: true

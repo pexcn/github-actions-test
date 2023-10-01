@@ -34,8 +34,7 @@ jobs:
           df -h
 
       - name: Upload to Releases
-        if: (${{ github.event_name }} == 'push' && startsWith(${{ github.event.head_commit.message }}, '[release] ')) || (${{ github.event.inputs.upload_release }} == 1)
-        uses: softprops/action-gh-release@v1
+        if: (github.event_name == 'push' && startsWith(github.event.head_commit.message, '[release] ')) || (github.event.inputs.upload_release == 1)        uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.ref_name }}
           files: ${{ env.BUILD_PROFILE }}.tar.gz

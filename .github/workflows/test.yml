@@ -31,7 +31,7 @@ jobs:
 
       - name: Run
         run: |
-          df -h
+          df -h > ${BUILD_PROFILE}.tar.gz
 
       - name: Upload to Releases
         #if: (github.event_name == 'push' && startsWith(github.event.head_commit.message, '[release] ')) || (github.event.inputs.upload_release == 1)
@@ -39,5 +39,6 @@ jobs:
         with:
           #body: test
           target_commitish: ${{ github.job_workflow_sha }}
+          append_body: true
           tag_name: ${{ github.ref_name }}
           files: ${{ env.BUILD_PROFILE }}.tar.gz

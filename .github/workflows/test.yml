@@ -39,7 +39,7 @@ jobs:
         with:
           body: ${{ github.job_workflow_sha }}
           target_commitish: ${{ github.job_workflow_sha }}
-          append_body: true
+          #append_body: true
           generate_release_notes: true
           tag_name: ${{ github.ref_name }}
           files: ${{ env.BUILD_PROFILE }}.tar.gz

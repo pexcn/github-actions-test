@@ -37,8 +37,9 @@ jobs:
         #if: (github.event_name == 'push' && startsWith(github.event.head_commit.message, '[release] ')) || (github.event.inputs.upload_release == 1)
         uses: softprops/action-gh-release@v1
         with:
-          #body: test
+          body: ${{ github.job_workflow_sha }}
           target_commitish: ${{ github.job_workflow_sha }}
           append_body: true
+          generate_release_notes: true
           tag_name: ${{ github.ref_name }}
           files: ${{ env.BUILD_PROFILE }}.tar.gz

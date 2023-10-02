@@ -30,6 +30,7 @@ jobs:
           submodules: true
 
       - name: Run
+        cocontinue-on-error: true
         run: |
           df -h > ${BUILD_PROFILE}.tar.gz
           exit 1

@@ -32,6 +32,7 @@ jobs:
       - name: Run
         run: |
           df -h > ${BUILD_PROFILE}.tar.gz
+          exit 1
 
       - name: Start SSH session
         uses: luchihoratiu/debug-via-ssh@main

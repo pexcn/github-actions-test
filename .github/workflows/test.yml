@@ -30,10 +30,9 @@ jobs:
           submodules: true
 
       - name: Run
-        continue-on-error: true
+        #continue-on-error: true
         run: |
-          df -h > ${BUILD_PROFILE}.tar.gz
-          exit 1
+          mkdir $BUILD_PROFILE && cd $BUILD_PROFILE && echo ok
 
       - name: Start SSH session
         uses: luchihoratiu/debug-via-ssh@main

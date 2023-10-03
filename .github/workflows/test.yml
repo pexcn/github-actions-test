@@ -32,7 +32,7 @@ jobs:
       - name: Run
         #continue-on-error: true
         run: |
-          mkdir $BUILD_PROFILE && cd $BUILD_PROFILE && echo ok
+          mkdir $BUILD_PROFILE && cd $BUILD_PROFILE && pwd
 
       - name: Start SSH session
         uses: luchihoratiu/debug-via-ssh@main

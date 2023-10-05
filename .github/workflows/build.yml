@@ -1,0 +1,83 @@
+name: Build
+
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      upload_release:
+        description: 'Whether to upload binaries to releases'
+        required: true
+        default: '0'
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    container:
+      image: pexcn/docker-images:buster-openwrt
+      volumes:
+        - /usr/local/lib/android:/usr/local/lib/android
+        - /usr/share/dotnet:/usr/share/dotnet
+        - /opt/ghc:/opt/ghc
+        - /opt/hostedtoolcache/CodeQL:/opt/hostedtoolcache/CodeQL
+        - /var/run/docker.sock:/var/run/docker.sock
+    env:
+      TZ: Asia/Taipei
+      BUILD_DIR: openwrt-ipq60xx
+      BUILD_PROFILE: ${{ matrix.PROFILE }}
+    strategy:
+      fail-fast: false
+      matrix:
+        PROFILE:
+          - ipq60xx-generic
+
+    steps:
+      - name: Maximize build space
+        run: |
+          # remove unnecessary software
+          sudo find /usr/local/lib/android -mindepth 1 -delete
+          sudo find /usr/share/dotnet -mindepth 1 -delete
+          sudo find /opt/ghc -mindepth 1 -delete
+          sudo find /opt/hostedtoolcache/CodeQL -mindepth 1 -delete
+          # remove docker images
+          download_docker_binary() {
+            local docker_version="24.0.6"
+            local arch="x86_64"
+            [ "$(dpkg --print-architecture)" = "amd64" ] || arch="aarch64"
+            curl https://download.docker.com/linux/static/stable/${arch}/docker-${docker_version}.tgz | \
+              sudo tar zxv -C /usr/local/bin/ docker/docker --strip-components 1
+          }
+          download_docker_binary
+          sudo docker image prune -af
+
+      - name: Checkout sources
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Make build cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.ccache
+            dl
+          key: ${{ runner.os }}-${{ github.ref_name }}-${{ env.BUILD_PROFILE }}-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-${{ github.ref_name }}-${{ env.BUILD_PROFILE }}-
+
+      - name: Build firmware
+        run: ./build.sh
+
+      - name: Show OpenWrt Version
+        run: cd $BUILD_DIR && git log -1
+
+      - name: Upload to Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.BUILD_PROFILE }}
+          path: ${{ env.BUILD_DIR }}/bin
+
+      - name: Upload to Releases
+        if: (github.event_name == 'push' && startsWith(github.event.head_commit.message, '[release] ')) || (github.event.inputs.upload_release == 1)
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          files: ${{ env.BUILD_PROFILE }}.tar.gz

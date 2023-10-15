@@ -17,7 +17,7 @@ jobs:
     env:
       TZ: Asia/Taipei
       BUILD_PROFILE: ${{ matrix.PROFILE }}
-      CACHE_DIRS: "{[\'test1\', \'test2\']}"
+      #CACHE_DIRS: "{[\'test1\', \'test2\']}"
     strategy:
       fail-fast: false
       matrix:
@@ -32,7 +32,7 @@ jobs:
 
       - uses: actions/cache@v3
         with:
-          path: ${{ fromJSON(env.CACHE_DIRS) }}
+          path: test1, test2
           key: test-key
 
       - name: Run

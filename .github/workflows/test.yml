@@ -17,6 +17,7 @@ jobs:
     env:
       TZ: Asia/Taipei
       BUILD_PROFILE: ${{ matrix.PROFILE }}
+      CACHE_DIRS: "['ipq60xx-generic', 'test1']"
     strategy:
       fail-fast: false
       matrix:
@@ -29,20 +30,26 @@ jobs:
         with:
           submodules: true
 
+      - uses: actions/cache@v3
+        with:
+          path: ${{ env.CACHE_DIRS }}
+          key: test-key
+
       - name: Run
         #continue-on-error: true
         run: |
-          mkdir $BUILD_PROFILE && cd $BUILD_PROFILE && pwd
+          mkdir test1
+          mkdir $BUILD_PROFILE
 
-      - name: Start SSH session
-        uses: luchihoratiu/debug-via-ssh@main
-        with:
-          NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
-          SSH_PASS: ${{ secrets.SSH_PASS }}
+      # - name: Start SSH session
+      #   uses: luchihoratiu/debug-via-ssh@main
+      #   with:
+      #     NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
+      #     SSH_PASS: ${{ secrets.SSH_PASS }}
 
-      - name: Upload to Releases
-        if: (github.event_name == 'push' && startsWith(github.event.head_commit.message, '[release] ')) || (github.event.inputs.upload_release == 1)
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: ${{ github.ref_name }}
-          files: ${{ env.BUILD_PROFILE }}.tar.gz
+      # - name: Upload to Releases
+      #   if: (github.event_name == 'push' && startsWith(github.event.head_commit.message, '[release] ')) || (github.event.inputs.upload_release == 1)
+      #   uses: softprops/action-gh-release@v1
+      #   with:
+      #     tag_name: ${{ github.ref_name }}
+      #     files: ${{ env.BUILD_PROFILE }}.tar.gz

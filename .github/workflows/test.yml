@@ -17,7 +17,7 @@ jobs:
     env:
       TZ: Asia/Taipei
       BUILD_PROFILE: ${{ matrix.PROFILE }}
-      CACHE_DIRS: "['ipq60xx-generic', 'test1']"
+      CACHE_DIRS: "['test1', 'test2']"
     strategy:
       fail-fast: false
       matrix:
@@ -32,14 +32,16 @@ jobs:
 
       - uses: actions/cache@v3
         with:
-          path: ${{ env.CACHE_DIRS }}
+          path: ${{ fromJSON(env.CACHE_DIRS) }}
           key: test-key
 
       - name: Run
         #continue-on-error: true
         run: |
           mkdir test1
-          mkdir $BUILD_PROFILE
+          echo 111 > test1/1.txt
+          mkdir test2
+          echo 222 > test2/2.txt
 
       # - name: Start SSH session
       #   uses: luchihoratiu/debug-via-ssh@main

@@ -32,7 +32,7 @@ jobs:
 
       - uses: actions/cache@v3
         with:
-          path: test1, test2
+          path: "['test1', 'test2']"
           key: test-key
 
       - name: Run

@@ -12,14 +12,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
-    container:
-      image: pexcn/docker-images:buster-openwrt
-      volumes:
-        - /usr/local/lib/android:/usr/local/lib/android
-        - /usr/share/dotnet:/usr/share/dotnet
-        - /opt/ghc:/opt/ghc
-        - /opt/hostedtoolcache/CodeQL:/opt/hostedtoolcache/CodeQL
-        - /var/run/docker.sock:/var/run/docker.sock
+    # container:
+    #   image: pexcn/docker-images:buster-openwrt
+    #   volumes:
+    #     - /usr/local/lib/android:/usr/local/lib/android
+    #     - /usr/share/dotnet:/usr/share/dotnet
+    #     - /opt/ghc:/opt/ghc
+    #     - /opt/hostedtoolcache/CodeQL:/opt/hostedtoolcache/CodeQL
+    #     - /var/run/docker.sock:/var/run/docker.sock
     env:
       TZ: Asia/Taipei
       BUILD_PROFILE: ${{ matrix.PROFILE }}

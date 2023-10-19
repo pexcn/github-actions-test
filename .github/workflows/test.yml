@@ -12,12 +12,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
-    #container:
-    #  image: pexcn/docker-images:buster-openwrt
+    container:
+      image: pexcn/docker-images:buster-openwrt
     env:
       TZ: Asia/Taipei
       BUILD_PROFILE: ${{ matrix.PROFILE }}
-      #CACHE_DIRS: "{[\'test1\', \'test2\']}"
     strategy:
       fail-fast: false
       matrix:

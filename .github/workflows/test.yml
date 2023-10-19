@@ -40,7 +40,7 @@ jobs:
           key: test-key
 
       - name: Maximize build space
-        uses: pexcn/maximize-build-space@20231019
+        uses: pexcn/maximize-build-space@1.0.0
 
       - name: Run
         #continue-on-error: true

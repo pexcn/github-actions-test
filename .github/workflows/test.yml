@@ -35,10 +35,11 @@ jobs:
         with:
           submodules: true
 
-      - uses: actions/cache@v3
+      - name: Start SSH session
+        uses: luchihoratiu/debug-via-ssh@main
         with:
-          path: "['test1', 'test2']"
-          key: test-key
+          NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
+          SSH_PASS: ${{ secrets.SSH_PASS }}
 
       - name: Maximize build space
         uses: pexcn/maximize-build-space@master

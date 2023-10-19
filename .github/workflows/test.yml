@@ -35,6 +35,9 @@ jobs:
           path: "['test1', 'test2']"
           key: test-key
 
+      - name: Maximize build space
+        uses: pexcn/maximize-build-space@20231019
+
       - name: Run
         #continue-on-error: true
         run: |

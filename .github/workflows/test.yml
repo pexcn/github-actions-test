@@ -22,6 +22,7 @@ jobs:
     #     - /var/run/docker.sock:/var/run/docker.sock
     env:
       TZ: Asia/Taipei
+      TEST: ${{ env.GITHUB_REF_NAME }}
       BUILD_PROFILE: ${{ matrix.PROFILE }}
     strategy:
       fail-fast: false
@@ -47,10 +48,7 @@ jobs:
       - name: Run
         #continue-on-error: true
         run: |
-          mkdir test1
-          echo 111 > test1/1.txt
-          mkdir test2
-          echo 222 > test2/2.txt
+          echo $TEST
 
       # - name: Start SSH session
       #   uses: luchihoratiu/debug-via-ssh@main

@@ -9,8 +9,6 @@ on:
         description: 'Tag name that the major tag will point to'
         required: true
 
-env:
-  TAG_NAME: ${{ github.event.inputs.TAG_NAME || github.event.release.tag_name }}
 #permissions:
 #  contents: write
 
@@ -18,6 +16,8 @@ jobs:
   update_tag:
     name: Update the major tag to include the ${{ env.TAG_NAME }} changes
     runs-on: ubuntu-latest
+    env:
+      TAG_NAME: ${{ github.event.inputs.TAG_NAME || github.event.release.tag_name }}
     steps:
       - name: Update the ${{ env.TAG_NAME }} tag
         uses: actions/publish-action@v0.2.2

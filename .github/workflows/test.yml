@@ -12,49 +12,28 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
-    # container:
-    #   image: pexcn/docker-images:buster-openwrt
-    #   volumes:
-    #     - /usr/local/lib/android:/usr/local/lib/android
-    #     - /usr/share/dotnet:/usr/share/dotnet
-    #     - /opt/ghc:/opt/ghc
-    #     - /opt/hostedtoolcache/CodeQL:/opt/hostedtoolcache/CodeQL
-    #     - /var/run/docker.sock:/var/run/docker.sock
     env:
       TZ: Asia/Taipei
-      TEST: ${{ env.GITHUB_REF_NAME }}
-      BUILD_PROFILE: ${{ matrix.PROFILE }}
-    strategy:
-      fail-fast: false
-      matrix:
-        PROFILE:
-          - ipq60xx-generic
 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          submodules: true
+        # with:
+        #   submodules: true
 
-      # - name: Start SSH session
-      #   uses: luchihoratiu/debug-via-ssh@main
-      #   with:
-      #     NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
-      #     SSH_PASS: ${{ secrets.SSH_PASS }}
+      - name: Start SSH session
+        uses: luchihoratiu/debug-via-ssh@main
+        with:
+          NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
+          SSH_PASS: ${{ secrets.SSH_PASS }}
 
       # - name: Maximize build space
       #   uses: pexcn/maximize-build-space@master
 
-      - name: Run
-        #continue-on-error: true
-        run: |
-          echo $TEST
-
-      # - name: Start SSH session
-      #   uses: luchihoratiu/debug-via-ssh@main
-      #   with:
-      #     NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
-      #     SSH_PASS: ${{ secrets.SSH_PASS }}
+      # - name: Run
+      #   #continue-on-error: true
+      #   run: |
+      #     echo $TEST
 
       # - name: Upload to Releases
       #   if: (github.event_name == 'push' && startsWith(github.event.head_commit.message, '[release] ')) || (github.event.inputs.upload_release == 1)

@@ -1,7 +1,8 @@
 #!/bin/sh
 
 test() {
-  [ X$TEST = X1 ] || return 0
+  [ -n "$TEST" ] || return 0
+  [ "$TEST" = 1 ] || return 0
   echo ok
 }
 

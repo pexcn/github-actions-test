@@ -33,7 +33,11 @@ jobs:
 
       - name: Run
         #continue-on-error: true
-        run: echo 11 > test-111.tar.gz
+        run: |
+          echo 11 > test-111.tar.gz
+          mkdir -p openwrt/bin/targets/qualcommax/ipq60xx
+          cd openwrt/bin/targets/qualcommax/ipq60xx
+          echo test > openwrt-sdk-qualcommax-ipq60xx_gcc-12.3.0_musl.Linux-x86_64.tar.xz
 
       - name: Upload to Releases
         #if: (github.event_name == 'push' && startsWith(github.event.head_commit.message, '[release] ')) || (github.event.inputs.upload_release == 1)

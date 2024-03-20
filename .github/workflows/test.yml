@@ -44,4 +44,6 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
-          files: test*.tar.gz
+          files: |
+            test*.tar.gz
+            openwrt/bin/targets/*/*/openwrt-sdk-*.tar.xz

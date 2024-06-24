@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-22.04
     env:
       TZ: Asia/Taipei
-      TEST: ${{ github.event.inputs.upload_release }}
+      TEST: TEST_STRING
 
     steps:
       - name: Checkout
@@ -34,10 +34,11 @@ jobs:
       - name: Run
         #continue-on-error: true
         run: |
-          echo 11 > test-111.tar.gz
           mkdir -p openwrt/bin/targets/qualcommax/ipq60xx
           cd openwrt/bin/targets/qualcommax/ipq60xx
-          echo test > openwrt-sdk-qualcommax-ipq60xx_gcc-12.3.0_musl.Linux-x86_64.tar.xz
+          echo test > openwrt-sdk-qualcommax-ipq60xx_gcc-12.3.0_musl.Linux-x86_64.tar.zst
+          cd -
+          rename "s/qualcommax-ipq60xx/${{ env.BUILD_PROFILE }}/" openwrt/bin/targets/*/*/openwrt-sdk-*.tar.zst
 
       - name: Upload to Releases
         #if: (github.event_name == 'push' && startsWith(github.event.head_commit.message, '[release] ')) || (github.event.inputs.upload_release == 1)

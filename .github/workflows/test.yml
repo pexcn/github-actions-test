@@ -34,6 +34,9 @@ jobs:
       - name: Run
         #continue-on-error: true
         run: |
+          sudo apt-get update
+          sudo apt-get install rename -y
+
           mkdir -p openwrt/bin/targets/qualcommax/ipq60xx
           cd openwrt/bin/targets/qualcommax/ipq60xx
           echo test > openwrt-sdk-qualcommax-ipq60xx_gcc-12.3.0_musl.Linux-x86_64.tar.zst

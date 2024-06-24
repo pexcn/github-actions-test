@@ -41,7 +41,7 @@ jobs:
           cd openwrt/bin/targets/qualcommax/ipq60xx
           echo test > openwrt-sdk-qualcommax-ipq60xx_gcc-12.3.0_musl.Linux-x86_64.tar.zst
           cd -
-          rename "s/qualcommax-ipq60xx/${{ env.BUILD_PROFILE }}/" openwrt/bin/targets/*/*/openwrt-sdk-*.tar.zst
+          rename "s/qualcommax-ipq60xx/${{ env.TEST }}/" openwrt/bin/targets/*/*/openwrt-sdk-*.tar.zst
 
       - name: Upload to Releases
         #if: (github.event_name == 'push' && startsWith(github.event.head_commit.message, '[release] ')) || (github.event.inputs.upload_release == 1)

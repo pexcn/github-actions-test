@@ -49,5 +49,4 @@ jobs:
         with:
           tag_name: ${{ github.ref_name }}
           files: |
-            test*.tar.gz
-            openwrt/bin/targets/*/*/openwrt-sdk-*.tar.xz
+            openwrt/bin/targets/*/*/openwrt-sdk-*.tar.zst

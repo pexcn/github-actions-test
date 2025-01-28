@@ -42,7 +42,7 @@ jobs:
 
       - name: Build Kernel
         run: |
-          echo ${{ github.workflow }}
+          echo ${{ github.job }}
           chmod +x build.sh
           ./build.sh
 

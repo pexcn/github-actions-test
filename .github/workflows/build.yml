@@ -1,60 +1,60 @@
-name: Build
+name: OnePlus 8T
 
 on:
   push:
-    paths-ignore:
-      - 'ext/**'
-      - '**.md'
-      - '**/docker-compose.yml'
   workflow_dispatch:
-    inputs:
-      deploy:
-        description: 'Whether to deploy DockerHub and GHCR'
-        required: true
-        default: '0'
 
 jobs:
-  build-and-push:
-    runs-on: ubuntu-22.04
+  build:
+    runs-on: ubuntu-24.04
+    container:
+      image: pexcn/docker-images:bookworm-android
     env:
       TZ: Asia/Taipei
+      BUILD_CONFIG: ${{ matrix.CONFIG }}
+      BRAND_SHOW_FLAG: oneplus
     strategy:
       fail-fast: false
       matrix:
-        include:
-          # openjdk-7
-          - BUILD_CONTEXT: java/openjdk-7
-            TARGET_PLATFORMS: linux/amd64,linux/arm64
+        CONFIG:
+          - nameless-aosp-14
+          #- pixelos-14
 
     steps:
-      # prepare
-      - name: Checkout
+      #- name: Maximize disk space
+      #  uses: pexcn/maximize-disk-space@v1
+      #  with:
+      #    use-system-docker: false
+
+      - name: Checkout sources
         uses: actions/checkout@v4
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
         with:
-          platforms: linux/amd64,linux/arm64
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-      - name: Set environment variables
-        run: |
-          echo "BUILD_TAG=$(basename ${{ matrix.BUILD_CONTEXT }})" >> $GITHUB_ENV
+          submodules: true
 
-      # login
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+      #- name: Make build cache
+      #  uses: actions/cache@v4
+      #  with:
+      #    path: |
+      #      ~/.ccache
+      #      /builder/.ccache
+      #    key: ${{ runner.os }}-${{ github.ref_name }}-${{ env.BUILD_PROFILE }}-${{ github.sha }}
+      #    restore-keys: ${{ runner.os }}-${{ github.ref_name }}-${{ env.BUILD_PROFILE }}-
 
-      # build & push
-      - name: Build image and Push to Container Registries
-        uses: docker/build-push-action@v5
-        if: ${{ github.event_name == 'push' || github.event.inputs.deploy == '1' }}
-        with:
-          context: ${{ matrix.BUILD_CONTEXT }}
-          tags: |
-            ghcr.io/${{ github.repository }}:${{ env.BUILD_TAG }}
-          platforms: ${{ matrix.TARGET_PLATFORMS }}
-          push: true
+      - name: Build Kernel
+        run: ./build.sh
+
+      #- name: Upload to Artifact
+      #  uses: actions/upload-artifact@v4
+      #  with:
+      #    name: ${{ env.BUILD_PROFILE }}
+      #    path: openwrt/bin
+
+      #- name: Set release tag
+      #  run: echo "RELEASE_TAG=$(date +%Y%m%d)" >> $GITHUB_ENV
+
+      #- name: Upload to Releases
+      #  if: (github.event_name == 'push' && startsWith(github.event.head_commit.message, '[release] ')) || (github.event.inputs.upload_release == 1)
+      #  uses: softprops/action-gh-release@v2
+      #  with:
+      #    tag_name: ${{ env.RELEASE_TAG }}
+      #    files: ${{ env.BUILD_PROFILE }}.tar.gz

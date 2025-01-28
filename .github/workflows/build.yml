@@ -37,7 +37,7 @@ jobs:
           path: |
             ~/.ccache
             /builder/.ccache
-            /__w/${{ github.event.repository.name }}/${{ github.event.repository.name }}
+            /__w/${{ github.event.repo.name }}/${{ github.event.repo.name }}
           key: ${{ runner.os }}-${{ github.workflow }}-${{ env.BUILD_CONFIG }}-${{ github.sha }}
           restore-keys: ${{ runner.os }}-${{ github.workflow }}-${{ env.BUILD_CONFIG }}-
 

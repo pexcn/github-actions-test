@@ -37,8 +37,8 @@ jobs:
           path: |
             ~/.ccache
             /builder/.ccache
-          key: ${{ runner.os }}-${{ github.ref_name }}-${{ env.BUILD_CONFIG }}-${{ github.sha }}
-          restore-keys: ${{ runner.os }}-${{ github.ref_name }}-${{ env.BUILD_CONFIG }}-
+          key: ${{ runner.os }}-${{ github.workflow }}-${{ env.BUILD_CONFIG }}-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-${{ github.workflow }}-${{ env.BUILD_CONFIG }}-
 
       - name: Build Kernel
         run: |

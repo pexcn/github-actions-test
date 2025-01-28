@@ -37,12 +37,13 @@ jobs:
           path: |
             ~/.ccache
             /builder/.ccache
+            ${{ github.workspace }}
           key: ${{ runner.os }}-${{ github.workflow }}-${{ env.BUILD_CONFIG }}-${{ github.sha }}
           restore-keys: ${{ runner.os }}-${{ github.workflow }}-${{ env.BUILD_CONFIG }}-
 
       - name: Build Kernel
         run: |
-          echo ${{ github.job }}
+          echo ${{ github.workspace }}
           chmod +x build.sh
           ./build.sh
 

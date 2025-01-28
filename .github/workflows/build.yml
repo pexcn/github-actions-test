@@ -31,14 +31,14 @@ jobs:
         with:
           submodules: true
 
-      #- name: Make build cache
-      #  uses: actions/cache@v4
-      #  with:
-      #    path: |
-      #      ~/.ccache
-      #      /builder/.ccache
-      #    key: ${{ runner.os }}-${{ github.ref_name }}-${{ env.BUILD_PROFILE }}-${{ github.sha }}
-      #    restore-keys: ${{ runner.os }}-${{ github.ref_name }}-${{ env.BUILD_PROFILE }}-
+      - name: Make build cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.ccache
+            /builder/.ccache
+          key: ${{ runner.os }}-${{ github.ref_name }}-${{ env.BUILD_CONFIG }}-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-${{ github.ref_name }}-${{ env.BUILD_CONFIG }}-
 
       - name: Build Kernel
         run: |

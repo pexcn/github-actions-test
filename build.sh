@@ -1,9 +1,6 @@
 #!/bin/sh
 
-env
-
-echo
-echo
-echo
-
-export
+git clone https://github.com/rssnsj/portfwd
+cd portfwd/src
+export CC="ccache gcc"
+make

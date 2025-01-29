@@ -5,8 +5,8 @@
 #export CC="ccache gcc"
 #make
 
-ls -al ~/.cache/ccache
-echo
-echo
-echo
-find ~/.cache/ccache
+#ls -al ~/.cache/ccache
+#echo
+#echo
+#echo
+#find ~/.cache/ccache

@@ -1,3 +1,9 @@
 #!/bin/sh
 
-echo $GITHUB_WORKSPACE
+env
+
+echo
+echo
+echo
+
+export

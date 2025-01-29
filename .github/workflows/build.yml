@@ -43,7 +43,6 @@ jobs:
 
       - name: Build Kernel
         run: |
-          echo ${{ github.workspace }}
           chmod +x build.sh
           ./build.sh
 

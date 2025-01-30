@@ -1,9 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 
 echo $ENABLE_FEATURE
 
-if [[ "$ENABLE_FEATURE" == "false" ]]; then
-  echo "disabled."
-else
+if $ENABLE_FEATURE; then
   echo "enabled."
+else
+  echo "disabled."
 fi

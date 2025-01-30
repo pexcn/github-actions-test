@@ -4,7 +4,8 @@ on:
   push:
   workflow_dispatch:
     inputs:
-      test:
+      enable_feature:
+        description: "Enable special feature?"
         type: boolean
         required: true
         default: false
@@ -34,6 +35,14 @@ jobs:
       #      ~/.cache/ccache
       #    key: ${{ runner.os }}-${{ github.workflow }}-${{ env.BUILD_CONFIG }}-${{ github.sha }}
       #    restore-keys: ${{ runner.os }}-${{ github.workflow }}-${{ env.BUILD_CONFIG }}-
+
+      - name: Show Checkbox Selection
+        run: |
+          if [ "${{ github.event.inputs.enable_feature }}" == "true" ]; then
+            echo "Feature is ENABLED"
+          else
+            echo "Feature is DISABLED"
+          fi
 
       - name: Build
         run: |

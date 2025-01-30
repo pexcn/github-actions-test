@@ -3,6 +3,11 @@ name: OnePlus 8T
 on:
   push:
   workflow_dispatch:
+    inputs:
+      test:
+        type: boolean
+        required: true
+        default: false
 
 jobs:
   build:
@@ -12,34 +17,25 @@ jobs:
     env:
       TZ: Asia/Taipei
       BUILD_CONFIG: ${{ matrix.CONFIG }}
-      BRAND_SHOW_FLAG: oneplus
     strategy:
       fail-fast: false
       matrix:
         CONFIG:
-          - nameless-aosp-14
-          #- pixelos-14
+          - nameless-14
 
     steps:
-      #- name: Maximize disk space
-      #  uses: pexcn/maximize-disk-space@v1
-      #  with:
-      #    use-system-docker: false
-
       - name: Checkout sources
         uses: actions/checkout@v4
-        with:
-          submodules: true
 
-      - name: Make build cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            /builder/.cache/ccache
-          key: ${{ runner.os }}-${{ github.workflow }}-${{ env.BUILD_CONFIG }}-${{ github.sha }}
-          restore-keys: ${{ runner.os }}-${{ github.workflow }}-${{ env.BUILD_CONFIG }}-
+      #- name: Make build cache
+      #  uses: actions/cache@v4
+      #  with:
+      #    path: |
+      #      ~/.cache/ccache
+      #    key: ${{ runner.os }}-${{ github.workflow }}-${{ env.BUILD_CONFIG }}-${{ github.sha }}
+      #    restore-keys: ${{ runner.os }}-${{ github.workflow }}-${{ env.BUILD_CONFIG }}-
 
-      - name: Build Kernel
+      - name: Build
         run: |
           chmod +x build.sh
           ./build.sh

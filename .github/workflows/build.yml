@@ -8,7 +8,7 @@ on:
         description: "Add KernelSU"
         type: boolean
         required: true
-        default: true
+        default: false
 
 jobs:
   build:
@@ -18,7 +18,7 @@ jobs:
     env:
       TZ: Asia/Taipei
       BUILD_CONFIG: nameless-14
-      ADD_KERNELSU: ${{ github.event.inputs.add_kernelsu || true }}
+      ADD_KERNELSU: ${{ github.event.inputs.add_kernelsu }}
 
     steps:
       - name: Checkout sources

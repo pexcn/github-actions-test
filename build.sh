@@ -2,9 +2,8 @@
 
 echo $ENABLE_FEATURE
 
-[ -n $ENABLE_FEATURE ] || {
+if [ $ENABLE_FEATURE == "false" ]; then
   echo "disabled."
-  exit 0
-}
-
-echo "enabled."
+else
+  echo "enabled."
+fi

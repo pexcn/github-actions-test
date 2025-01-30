@@ -9,4 +9,3 @@ add_kernelsu() {
 }
 
 add_kernelsu
-echo $?

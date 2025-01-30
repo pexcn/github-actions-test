@@ -8,29 +8,21 @@ on:
         description: "Add KernelSU"
         type: boolean
         required: true
-        default: false
+        default: true
 
 jobs:
   build:
     runs-on: ubuntu-24.04
-    container:
-      image: pexcn/docker-images:bookworm-android
+    #container:
+    #  image: pexcn/docker-images:bookworm-android
     env:
       TZ: Asia/Taipei
       BUILD_CONFIG: nameless-14
-      ENABLE_FEATURE: ${{ github.event.inputs.enable_feature || false }}
+      ENABLE_FEATURE: ${{ github.event.inputs.enable_feature }}
 
     steps:
       - name: Checkout sources
         uses: actions/checkout@v4
-
-      - name: Show Checkbox Selection
-        run: |
-          if [[ "$ENABLE_FEATURE" == "true" ]]; then
-            echo "Feature is ENABLED"
-          else
-            echo "Feature is DISABLED"
-          fi
 
       - name: Build
         run: |

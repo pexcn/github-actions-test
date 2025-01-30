@@ -18,7 +18,7 @@ jobs:
     env:
       TZ: Asia/Taipei
       BUILD_CONFIG: nameless-14
-      ADD_KERNELSU: ${{ github.event.inputs.add_kernelsu }}
+      ADD_KERNELSU: ${{ github.event.inputs.add_kernelsu || true }}
 
     steps:
       - name: Checkout sources

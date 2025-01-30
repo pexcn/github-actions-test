@@ -8,7 +8,7 @@ on:
         description: "Add KernelSU"
         type: boolean
         required: true
-        default: false
+        default: true
 
 jobs:
   build:

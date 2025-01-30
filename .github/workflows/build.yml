@@ -18,7 +18,7 @@ jobs:
     env:
       TZ: Asia/Taipei
       BUILD_CONFIG: ${{ matrix.CONFIG }}
-      ENABLE_FEATURE: ${{ github.event.inputs.enable_feature }}
+      ENABLE_FEATURE: ${{ github.event.inputs.enable_feature || false }}
     strategy:
       fail-fast: false
       matrix:

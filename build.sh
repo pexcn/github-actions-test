@@ -1,6 +1,11 @@
 #!/bin/sh
 
-echo VAL: $ENABLE_FEATURE
+echo "value: $ADD_KERNELSU"
 
-[ "$ENABLE_FEATURE" = true ] || { echo "disabled."; exit 0; }
-echo "enabled."
+add_kernelsu() {
+  [ "$ADD_KERNELSU" = true ] || exit 0
+
+  echo "add kernelsu..."
+}
+
+add_kernelsu

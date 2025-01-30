@@ -1,10 +1,6 @@
 #!/bin/sh
 
-echo $ENABLE_FEATURE
+echo VAL: $ENABLE_FEATURE
 
-[ "$ENABLE_FEATURE" = true ] || {
-  echo "disabled."
-  exit 0
-}
-
+[ "$ENABLE_FEATURE" = true ] || { echo "disabled."; exit 0 }
 echo "enabled."

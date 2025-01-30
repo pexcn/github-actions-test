@@ -4,8 +4,8 @@ on:
   push:
   workflow_dispatch:
     inputs:
-      enable_feature:
-        description: "Enable special feature?"
+      add_kernelsu:
+        description: "Add KernelSU"
         type: boolean
         required: true
         default: false
@@ -17,29 +17,16 @@ jobs:
       image: pexcn/docker-images:bookworm-android
     env:
       TZ: Asia/Taipei
-      BUILD_CONFIG: ${{ matrix.CONFIG }}
+      BUILD_CONFIG: nameless-14
       ENABLE_FEATURE: ${{ github.event.inputs.enable_feature || false }}
-    strategy:
-      fail-fast: false
-      matrix:
-        CONFIG:
-          - nameless-14
 
     steps:
       - name: Checkout sources
         uses: actions/checkout@v4
 
-      #- name: Make build cache
-      #  uses: actions/cache@v4
-      #  with:
-      #    path: |
-      #      ~/.cache/ccache
-      #    key: ${{ runner.os }}-${{ github.workflow }}-${{ env.BUILD_CONFIG }}-${{ github.sha }}
-      #    restore-keys: ${{ runner.os }}-${{ github.workflow }}-${{ env.BUILD_CONFIG }}-
-
       - name: Show Checkbox Selection
         run: |
-          if [[ "${{ github.event.inputs.enable_feature }}" == "true" ]]; then
+          if [[ "$ENABLE_FEATURE" == "true" ]]; then
             echo "Feature is ENABLED"
           else
             echo "Feature is DISABLED"
@@ -49,19 +36,3 @@ jobs:
         run: |
           chmod +x build.sh
           ./build.sh
-
-      #- name: Upload to Artifact
-      #  uses: actions/upload-artifact@v4
-      #  with:
-      #    name: ${{ env.BUILD_PROFILE }}
-      #    path: openwrt/bin
-
-      #- name: Set release tag
-      #  run: echo "RELEASE_TAG=$(date +%Y%m%d)" >> $GITHUB_ENV
-
-      #- name: Upload to Releases
-      #  if: (github.event_name == 'push' && startsWith(github.event.head_commit.message, '[release] ')) || (github.event.inputs.upload_release == 1)
-      #  uses: softprops/action-gh-release@v2
-      #  with:
-      #    tag_name: ${{ env.RELEASE_TAG }}
-      #    files: ${{ env.BUILD_PROFILE }}.tar.gz

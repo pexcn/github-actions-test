@@ -2,8 +2,9 @@
 
 echo $ENABLE_FEATURE
 
-if $ENABLE_FEATURE; then
-  echo "enabled."
-else
+[ $ENABLE_FEATURE ] || {
   echo "disabled."
-fi
+  exit 0
+}
+
+echo "enabled."

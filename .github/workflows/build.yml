@@ -38,7 +38,7 @@ jobs:
 
       - name: Show Checkbox Selection
         run: |
-          if [ "${{ github.event.inputs.enable_feature }}" == "true" ]; then
+          if [[ "${{ github.event.inputs.enable_feature }}" == "true" ]]; then
             echo "Feature is ENABLED"
           else
             echo "Feature is DISABLED"

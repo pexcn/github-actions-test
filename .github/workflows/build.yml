@@ -9,6 +9,11 @@ on:
         type: boolean
         required: true
         default: true
+      upload_release:
+        description: 'Upload to Releases'
+        type: boolean
+        required: true
+        default: false
 
 jobs:
   build:
@@ -31,6 +36,7 @@ jobs:
           ./build.sh
 
       - name: Upload to Releases
+        if: github.event_name == 'push' && startsWith(github.event.head_commit.message, '[release] ') || github.event.inputs.upload_release == true
         uses: softprops/action-gh-release@v2
         with:
           tag_name: test

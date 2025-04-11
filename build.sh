@@ -111,13 +111,13 @@ optimize_config() {
   # prepare .config
   make "${MAKE_FLAGS[@]}" $KERNEL_CONFIG
 
-  # build `Image*-dtb`
-  scripts/config --file out/.config \
-   --enable CONFIG_BUILD_ARM64_APPENDED_DTB_IMAGE \
-   --enable CONFIG_BUILD_ARM64_DT_OVERLAY
-
+  ## build `Image*-dtb`
   #scripts/config --file out/.config \
-  # --enable CONFIG_BUILD_ARM64_DT_OVERLAY
+  #  --enable CONFIG_BUILD_ARM64_APPENDED_DTB_IMAGE \
+  #  --enable CONFIG_BUILD_ARM64_DT_OVERLAY
+
+  scripts/config --file out/.config \
+    --enable CONFIG_BUILD_ARM64_DT_OVERLAY
 
   # re-generate kernel config
   make "${MAKE_FLAGS[@]}" savedefconfig

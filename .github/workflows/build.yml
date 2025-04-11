@@ -53,7 +53,6 @@ jobs:
           name: ${{ env.DEVICE_CODENAME }}-${{ env.BUILD_CONFIG }}-kernel
           path: |
             build/${{ env.DEVICE_CODENAME }}-${{ env.BUILD_CONFIG }}-kernel.zip
-            build/kernel/out/arch/arm64/boot
 
       - name: Upload to Releases
         if: (github.event_name == 'push' && startsWith(github.event.head_commit.message, '[release] ')) || github.event.inputs.upload_release == 'true'

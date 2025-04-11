@@ -115,74 +115,8 @@ optimize_config() {
   #scripts/config --file out/.config \
   # --enable CONFIG_BUILD_ARM64_APPENDED_DTB_IMAGE \
   # --enable CONFIG_BUILD_ARM64_DT_OVERLAY
-  # enable optimizations
   scripts/config --file out/.config \
-    --enable CONFIG_INLINE_OPTIMIZATION \
-    --enable CONFIG_POLLY_CLANG \
-    --enable CONFIG_STRIP_ASM_SYMS
-  # enable thin lto
-  scripts/config --file out/.config \
-    --enable CONFIG_LTO \
-    --enable CONFIG_LTO_CLANG \
-    --enable CONFIG_LTO_CLANG_THIN \
-    --disable CONFIG_LTO_CLANG_FULL \
-    --enable CONFIG_THINLTO \
-    --disable CONFIG_LTO_NONE
-  # optimize kernel compression
-  scripts/config --file out/.config \
-    --disable CONFIG_KERNEL_GZIP \
-    --enable CONFIG_KERNEL_LZ4 \
-    --enable CONFIG_HAVE_KERNEL_LZ4 \
-    --enable CONFIG_RD_LZ4 \
-    --enable CONFIG_CRYPTO_LZ4
-  # optimize network scheduler
-  scripts/config --file out/.config \
-    --enable CONFIG_NET_SCH_FQ_CODEL \
-    --enable CONFIG_NET_SCH_DEFAULT \
-    --enable CONFIG_DEFAULT_FQ_CODEL \
-    --set-str CONFIG_DEFAULT_NET_SCH "fq_codel"
-  # optimize tcp congestion control
-  scripts/config --file out/.config \
-    --disable CONFIG_TCP_CONG_BIC \
-    --disable CONFIG_TCP_CONG_HTCP \
-    --enable CONFIG_TCP_CONG_ADVANCED \
-    --enable CONFIG_TCP_CONG_WESTWOOD \
-    --enable CONFIG_DEFAULT_WESTWOOD \
-    --set-str CONFIG_DEFAULT_TCP_CONG "westwood"
-  # disable unused features
-  scripts/config --file out/.config \
-    --disable CONFIG_CAN \
-    --disable CONFIG_MMC \
-    --disable CONFIG_FTRACE \
-    --disable CONFIG_SVELTE \
-    --disable CONFIG_IOMONITOR
-  # disable debug options
-  scripts/config --file out/.config \
-    --disable CONFIG_ALLOW_DEV_COREDUMP \
-    --disable CONFIG_QCOM_MINIDUMP \
-    --disable CONFIG_SLUB_DEBUG \
-    --disable CONFIG_SPMI_MSM_PMIC_ARB_DEBUG \
-    --disable CONFIG_VIDEO_ADV_DEBUG \
-    --disable CONFIG_MSM_DEBUGCC_KONA \
-    --disable CONFIG_DEBUG_KERNEL \
-    --disable CONFIG_DEBUG_ALIGN_RODATA \
-    --disable CONFIG_KMALLOC_DEBUG \
-    --disable CONFIG_VMALLOC_DEBUG \
-    --disable CONFIG_DUMP_TASKS_MEM \
-    --disable CONFIG_VSERVICES_LOCK_DEBUG \
-    --disable CONFIG_DEBUG_INFO \
-    --disable CONFIG_SCHED_DEBUG \
-    --disable CONFIG_DEBUG_BUGVERBOSE \
-    --disable CONFIG_DEBUG_LIST
-
-  # full lto override
-  if [ "$ENABLE_FULL_LTO" = true ]; then
-    scripts/config --file out/.config \
-      --disable CONFIG_LTO_NONE \
-      --disable CONFIG_THINLTO \
-      --disable CONFIG_LTO_CLANG_THIN \
-      --enable CONFIG_LTO_CLANG_FULL
-  fi
+   --enable CONFIG_BUILD_ARM64_DT_OVERLAY
 
   # re-generate kernel config
   make "${MAKE_FLAGS[@]}" savedefconfig

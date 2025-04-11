@@ -4,4 +4,4 @@ KERNEL_CONFIG="vendor/kona-perf_defconfig vendor/debugfs.config vendor/xiaomi/sm
 
 #ENABLE_FULL_LTO=true
 DONT_PATCH_KERNELSU=true
-DISABLE_OPTIMIZE=true
+#DISABLE_OPTIMIZE=true

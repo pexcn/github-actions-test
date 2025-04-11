@@ -1,14 +1,9 @@
-name: OnePlus 8T
+name: Xiaomi Pad 6
 
 on:
   push:
   workflow_dispatch:
     inputs:
-      add_kernelsu:
-        description: "Add KernelSU"
-        type: boolean
-        required: true
-        default: true
       upload_release:
         description: 'Upload to Releases'
         type: boolean
@@ -21,34 +16,45 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-24.04
-    #container:
-    #  image: pexcn/docker-images:bookworm-android
+    container:
+     image: pexcn/docker-images:bookworm-android
     env:
       TZ: Asia/Taipei
-      BUILD_CONFIG: nameless-14
-      ADD_KERNELSU: ${{ github.event.inputs.add_kernelsu }}
+      BUILD_CONFIG: ${{ matrix.CONFIG }}
+      DEVICE_CODENAME: pipa
+    strategy:
+      fail-fast: false
+      matrix:
+        CONFIG:
+          - bloodreaper
+          #- pixelos-15
 
     steps:
       - name: Checkout sources
         uses: actions/checkout@v4
 
-     # - name: Build
-     #   run: |
-     #     sudo apt-get update
-     #     sudo apt-get install -y openssh-client
+      - name: Make build cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/ccache
+            /__w/${{ github.event.repository.name }}/${{ github.event.repository.name }}/download
+            /__w/${{ github.event.repository.name }}/${{ github.event.repository.name }}/build/kernel/.git
+          key: ${{ env.DEVICE_CODENAME }}-${{ env.BUILD_CONFIG }}-${{ github.sha }}
+          restore-keys: ${{ env.DEVICE_CODENAME }}-${{ env.BUILD_CONFIG }}-
 
-      - name: Start SSH via tmate
-        uses: P3TERX/ssh2actions@main
+      - name: Build Kernel
+        run: ./build.sh
 
-      - name: Build
-        run: |
-          chmod +x build.sh
-          ADD_KERNELSU=false
-          ./build.sh
+      - name: Upload to Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.DEVICE_CODENAME }}-${{ env.BUILD_CONFIG }}-kernel
+          path: build/${{ env.DEVICE_CODENAME }}-${{ env.BUILD_CONFIG }}-kernel.zip
 
       - name: Upload to Releases
         if: (github.event_name == 'push' && startsWith(github.event.head_commit.message, '[release] ')) || github.event.inputs.upload_release == 'true'
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: test
-          files: build.sh
+          tag_name: ${{ env.DEVICE_CODENAME }}
+          files: build/${{ env.DEVICE_CODENAME }}-${{ env.BUILD_CONFIG }}-kernel.zip

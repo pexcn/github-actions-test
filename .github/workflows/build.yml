@@ -44,7 +44,7 @@ jobs:
           restore-keys: ${{ env.DEVICE_CODENAME }}-${{ env.BUILD_CONFIG }}-
 
       - name: Build Kernel
-        run: ./build.sh
+        run: bash build.sh
 
       - name: Upload to Artifact
         uses: actions/upload-artifact@v4

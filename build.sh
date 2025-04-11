@@ -111,12 +111,13 @@ optimize_config() {
   # prepare .config
   make "${MAKE_FLAGS[@]}" $KERNEL_CONFIG
 
-  ## build `Image*-dtb`
-  #scripts/config --file out/.config \
-  # --enable CONFIG_BUILD_ARM64_APPENDED_DTB_IMAGE \
-  # --enable CONFIG_BUILD_ARM64_DT_OVERLAY
+  # build `Image*-dtb`
   scripts/config --file out/.config \
+   --enable CONFIG_BUILD_ARM64_APPENDED_DTB_IMAGE \
    --enable CONFIG_BUILD_ARM64_DT_OVERLAY
+
+  #scripts/config --file out/.config \
+  # --enable CONFIG_BUILD_ARM64_DT_OVERLAY
 
   # re-generate kernel config
   make "${MAKE_FLAGS[@]}" savedefconfig
@@ -133,7 +134,7 @@ build_kernel() {
   # compile kernel
   make "${MAKE_FLAGS[@]}" -j$(($(nproc) + 1)) || exit 3
 
-  find out/arch/arm64/boot/dts -name '*.dtb' -exec cat {} + >out/arch/arm64/boot/dtb
+  #find out/arch/arm64/boot/dts -name '*.dtb' -exec cat {} + >out/arch/arm64/boot/dtb
 
   cd -
 }

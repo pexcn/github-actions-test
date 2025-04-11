@@ -133,6 +133,8 @@ build_kernel() {
   # compile kernel
   make "${MAKE_FLAGS[@]}" -j$(($(nproc) + 1)) || exit 3
 
+  find out/arch/arm64/boot/dts -name '*.dtb' -exec cat {} + >out/arch/arm64/boot/dtb
+
   cd -
 }
 

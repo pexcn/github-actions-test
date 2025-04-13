@@ -4,4 +4,4 @@ KERNEL_CONFIG=vendor/pipa_user_defconfig
 
 DONT_PATCH_KERNELSU=true
 #DISABLE_OPTIMIZE=true
-#ENABLE_FULL_LTO=true
+ENABLE_FULL_LTO=true

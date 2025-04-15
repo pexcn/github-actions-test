@@ -1,5 +1,5 @@
-KERNEL_SOURCE=https://github.com/Matrixx-Devices/android_kernel_xiaomi_pipa.git
-KERNEL_COMMIT=e579dd4b28a590f18da89918058a1d0936dee87f
+KERNEL_SOURCE=https://github.com/pexcn/android_kernel_xiaomi_pipa.git
+KERNEL_COMMIT=416621323c48011114deee0f58e664b309330efa
 KERNEL_CONFIG=pipa_aosp_defconfig
 
 # kernelsu is built-in in kernel source

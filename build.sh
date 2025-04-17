@@ -53,7 +53,7 @@ prepare_env() {
 }
 
 get_sources() {
-  [ -d build/kernel/.git ] || git clone $KERNEL_SOURCE --recurse-submodules --depth 20 build/kernel
+  [ -d build/kernel/.git ] || git clone $KERNEL_SOURCE --recurse-submodules --depth 100 build/kernel
   cd build/kernel
   git diff --quiet HEAD || {
     git reset --hard HEAD
@@ -116,7 +116,8 @@ optimize_config() {
     --enable CONFIG_BUILD_ARM64_DT_OVERLAY \
     --enable CONFIG_INLINE_OPTIMIZATION \
     --enable CONFIG_POLLY_CLANG \
-    --enable CONFIG_STRIP_ASM_SYMS
+    --enable CONFIG_STRIP_ASM_SYMS \
+    --set-str CONFIG_LOCALVERSION "-perf"
   # optimize network scheduler
   scripts/config --file out/.config \
     --enable CONFIG_NET_SCH_FQ_CODEL \
@@ -133,6 +134,7 @@ optimize_config() {
     --set-str CONFIG_DEFAULT_TCP_CONG "westwood"
   # disable unused features
   scripts/config --file out/.config \
+    --disable CONFIG_KSU_SUSFS \
     --disable CONFIG_CAN \
     --disable CONFIG_MMC \
     --disable CONFIG_FTRACE \
@@ -178,6 +180,15 @@ optimize_config() {
     scripts/config --file out/.config \
       --disable CONFIG_BUILD_ARM64_APPENDED_DTB_IMAGE
   fi
+
+  # disable lto
+  scripts/config --file out/.config \
+    --disable CONFIG_LTO \
+    --disable CONFIG_LTO_CLANG \
+    --disable CONFIG_LTO_CLANG_THIN \
+    --disable CONFIG_LTO_CLANG_FULL \
+    --disable CONFIG_THINLTO \
+    --enable CONFIG_LTO_NONE
 
   # re-generate kernel config
   make "${MAKE_FLAGS[@]}" savedefconfig

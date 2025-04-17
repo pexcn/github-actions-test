@@ -1,5 +1,5 @@
 KERNEL_SOURCE=https://github.com/pexcn/android_kernel_xiaomi_pipa.git
-KERNEL_COMMIT=eccee983846f7d960f9c8c9ad8ba8cec0ffe6fd5
+KERNEL_COMMIT=07d707bc8f1a4135af3f55d57fb5478d66eef24a
 KERNEL_CONFIG=pipa_optimize_defconfig
 
 # kernelsu is built-in in kernel source

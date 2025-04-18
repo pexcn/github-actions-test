@@ -1,5 +1,5 @@
 KERNEL_SOURCE=https://github.com/pexcn/android_kernel_xiaomi_pipa.git
-KERNEL_COMMIT=7eda545da6c2bdf2ebb768db8dda622588133ff2
+KERNEL_COMMIT=1485259ec4a055a5d5019e1260939d32a40fd336
 KERNEL_CONFIG=pipa_optimize_defconfig
 
 #ENABLE_FULL_LTO=true

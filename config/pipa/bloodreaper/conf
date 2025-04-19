@@ -1,8 +1,8 @@
-KERNEL_SOURCE=https://github.com/pexcn/android_kernel_xiaomi_pipa.git
-KERNEL_COMMIT=beeb4349dfbcde5b6baacbdf510d7bd5fcf77c7a
-KERNEL_CONFIG=pipa_optimize_defconfig
+KERNEL_SOURCE=https://github.com/Matrixx-Devices/android_kernel_xiaomi_pipa.git
+KERNEL_COMMIT=771a63447063edba97207d378f932b8740a8ca93
+KERNEL_CONFIG=pipa_aosp_defconfig
 
-#ENABLE_FULL_LTO=true
+ENABLE_FULL_LTO=true
 DONT_APPEND_DTB=true
 
 # kernelsu is built-in in kernel source

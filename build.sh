@@ -64,6 +64,9 @@ get_sources() {
   # checkout version
   git checkout $KERNEL_COMMIT || exit 1
 
+  # revert Makefile
+  git revert d38d84ea7308b1330fdb3ae6041dc4f78f66aef2
+
   # reverts
   git revert 9b64654f65d14bd7c2c13d9b6ca5571a926b5c2a
 

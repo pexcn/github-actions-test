@@ -68,7 +68,7 @@ get_sources() {
   git revert d38d84ea7308b1330fdb3ae6041dc4f78f66aef2
 
   # reverts
-  git revert 9b64654f65d14bd7c2c13d9b6ca5571a926b5c2a
+  #git revert 9b64654f65d14bd7c2c13d9b6ca5571a926b5c2a
 
   # remove `-dirty` of version
   sed -i 's/ -dirty//g' scripts/setlocalversion
@@ -123,6 +123,7 @@ optimize_config() {
     --enable CONFIG_INLINE_OPTIMIZATION \
     --enable CONFIG_POLLY_CLANG \
     --enable CONFIG_STRIP_ASM_SYMS \
+    --enable CONFIG_THERMAL_STATISTICS \
     --set-str CONFIG_LOCALVERSION "-perf"
   # optimize network scheduler
   scripts/config --file out/.config \

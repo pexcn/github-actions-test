@@ -23,6 +23,8 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y openssh-client
+          mkdir ~/.ssh
+          touch ~/.ssh/id_rsa
 
       - name: Start SSH via tmate
         uses: P3TERX/ssh2actions@main

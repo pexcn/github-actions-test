@@ -51,7 +51,7 @@ parse_args() {
         exit 0
         ;;
       *)
-        error "unknown option: $1"
+        echo "unknown option: $1"
         exit 2
         ;;
     esac

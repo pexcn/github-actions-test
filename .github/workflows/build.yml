@@ -27,7 +27,7 @@ jobs:
         run: |
           case "${{ inputs.project_name }}" in
             PixelOS)
-              export PROJECT_ID=82
+              echo "PROJECT_ID=82" >> $GITHUB_ENV
               ;;
             *)
               echo "未知的操作系统选择"

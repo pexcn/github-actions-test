@@ -27,7 +27,7 @@ jobs:
         run: |
           case "${{ inputs.project_name }}" in
             PixelOS)
-              PROJECT_ID=82
+              export PROJECT_ID=82
               ;;
             *)
               echo "未知的操作系统选择"

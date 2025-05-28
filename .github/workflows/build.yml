@@ -1,0 +1,39 @@
+name: Crave Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      project_name:
+        type: choice
+        description: The project name of foss.crave.io
+        default: PixelOS
+        options: 
+          - PixelOS
+          - DerpFest
+          - LineageOS 22.1
+          - AOSP
+          - TWRP
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    env:
+      TZ: Asia/Taipei
+    steps:
+      - name: Select
+        run: |
+          case "${{ inputs.project_name }}" in
+            PixelOS)
+              PROJECT_ID=82
+              ;;
+            *)
+              echo "未知的操作系统选择"
+              exit 1
+              ;;
+          esac
+
+      - name: Build
+        run: echo $PROJECT_ID

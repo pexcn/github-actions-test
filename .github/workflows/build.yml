@@ -39,4 +39,6 @@ jobs:
         run: |
           hostname
           hostnamectl
-          env
+          hostname test
+          hostname
+          hostnamectl

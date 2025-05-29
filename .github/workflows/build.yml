@@ -39,6 +39,6 @@ jobs:
         run: |
           hostname
           hostnamectl
-          hostname test
+          sudo hostname test
           hostname
           hostnamectl

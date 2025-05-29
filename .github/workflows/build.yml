@@ -36,4 +36,7 @@ jobs:
           esac
 
       - name: Build
-        run: echo $PROJECT_ID
+        run: |
+          hostname
+          hostnamectl
+          env

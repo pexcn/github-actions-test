@@ -1,8 +1,8 @@
 name: SSH
 
 on:
-  push:
   workflow_dispatch:
+  push:
 
 permissions:
   contents: write

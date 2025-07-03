@@ -26,5 +26,8 @@ jobs:
           sudo apt-get clean
           mkdir ~/.ssh && touch ~/.ssh/id_rsa
 
-      - name: Start SSH via tmate
-        uses: P3TERX/ssh2actions@main
+      #- name: Start SSH via tmate
+      #  uses: P3TERX/ssh2actions@main
+
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3

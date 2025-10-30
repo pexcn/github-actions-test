@@ -1,0 +1,60 @@
+name: Build
+
+on:
+  push:
+    paths-ignore:
+      - 'ext/**'
+      - '**.md'
+      - '**/docker-compose.yml'
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    #if: "!contains(github.event.head_commit.message, 'do-not-build')"
+    runs-on: ubuntu-24.04
+    concurrency:
+      group: ${{ matrix.BUILD_CONTEXT }}
+      cancel-in-progress: true
+    env:
+      TZ: Asia/Taipei
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # shadowsocks-rust
+          - BUILD_CONTEXT: net/shadowsocks-rust
+            TARGET_PLATFORMS: linux/amd64
+    steps:
+      # prepare
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: linux/amd64,linux/arm64
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Set environment variables
+        run: |
+          echo "BUILD_TAG=$(basename ${{ matrix.BUILD_CONTEXT }})" >> $GITHUB_ENV
+
+      # cache
+      - name: Cache Docker layers
+        uses: actions/cache@v4
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-${{ env.BUILD_TAG }}-buildx-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-${{ env.BUILD_TAG }}-buildx-
+
+      # build
+      - name: Build image and Push to Container Registries
+        uses: docker/build-push-action@v5
+        with:
+          context: ${{ matrix.BUILD_CONTEXT }}
+          tags: |
+            ${{ github.repository }}:${{ env.BUILD_TAG }}
+            ghcr.io/${{ github.repository }}:${{ env.BUILD_TAG }}
+          platforms: ${{ matrix.TARGET_PLATFORMS }}
+          push: false
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache

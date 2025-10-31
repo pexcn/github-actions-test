@@ -5,10 +5,12 @@
 #
 # Build stage [shadowsocks-rust]
 #
-FROM rust:alpine AS builder-ss
+FROM rust:slim-trixie AS builder-ss
 
-RUN apk update \
-  && apk add --no-cache --virtual .build-deps musl-dev git clang clang20-dev clang20-libclang
+RUN apt-get update \
+  && apt-get install --no-install-recommends -y git clang \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
 
 ARG SS_VERSION=v1.23.5
 RUN git clone https://github.com/shadowsocks/shadowsocks-rust.git --branch $SS_VERSION \

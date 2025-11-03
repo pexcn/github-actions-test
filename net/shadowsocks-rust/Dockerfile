@@ -14,6 +14,7 @@ RUN apt-get update \
 
 ARG TOOLCHAIN_VERSION=20250929
 ARG SS_VERSION=v1.23.5
+SHELL ["/bin/bash", "-c"]
 RUN set -ex \
   && case "$(dpkg --print-architecture)" in \
       amd64) RUST_TARGET='x86_64-unknown-linux-musl';; \

@@ -49,14 +49,14 @@ jobs:
           key: ${{ runner.os }}-${{ env.BUILD_TAG }}-buildx-${{ github.sha }}
           restore-keys: ${{ runner.os }}-${{ env.BUILD_TAG }}-buildx-
 
-      # cleanup
-      - name: Cleanup untagged images
-        uses: dataaxiom/ghcr-cleanup-action@v1
-        with:
-          delete-untagged: true
-          delete-ghost-images: true
-          delete-partial-images: true
-          delete-orphaned-images: true
+      ## cleanup
+      #- name: Cleanup untagged images
+      #  uses: dataaxiom/ghcr-cleanup-action@v1
+      #  with:
+      #    delete-untagged: true
+      #    delete-ghost-images: true
+      #    delete-partial-images: true
+      #    delete-orphaned-images: true
 
       # build
       - name: Build image and Push to Container Registries

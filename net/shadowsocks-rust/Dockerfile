@@ -14,7 +14,8 @@ RUN apt-get update \
 
 ARG TOOLCHAIN_VERSION=20250929
 ARG SS_VERSION=v1.23.5
-RUN case "$(dpkg --print-architecture)" in \
+RUN set -ex \
+  && case "$(dpkg --print-architecture)" in \
       amd64) RUST_TARGET='x86_64-unknown-linux-musl';; \
       arm64) RUST_TARGET='aarch64-unknown-linux-musl';; \
     esac \

@@ -31,9 +31,7 @@ RUN set -ex \
   && rustup target add $RUST_TARGET \
   && git clone https://github.com/shadowsocks/shadowsocks-rust.git --branch $SS_VERSION \
   && cd shadowsocks-rust \
-  # fix rustfmt missing when compile librocksdb
   && rustup component add rustfmt \
-  # fix librocksdb compile, ref: https://github.com/facebook/rocksdb/issues/13365#issuecomment-2833978676
   && export CXXFLAGS="$CXXFLAGS -include cstdint" \
   && cargo build --release --target $RUST_TARGET --features "full dns-over-h3 local-fake-dns aead-cipher-extra aead-cipher-2022-extra" \
   && install target/${RUST_TARGET}/release/{ssservice,ssserver,sslocal,ssmanager,ssurl} /usr/local/bin/ \

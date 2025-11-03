@@ -8,7 +8,7 @@
 FROM rust:slim-trixie AS builder-ss
 
 RUN apt-get update \
-  && apt-get install --no-install-recommends -y curl git clang \
+  && apt-get install --no-install-recommends -y curl git clang xz-utils \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 

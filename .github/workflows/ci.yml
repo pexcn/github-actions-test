@@ -49,6 +49,13 @@ jobs:
           key: ${{ runner.os }}-${{ env.BUILD_TAG }}-buildx-${{ github.sha }}
           restore-keys: ${{ runner.os }}-${{ env.BUILD_TAG }}-buildx-
 
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       # cleanup
       - name: Cleanup untagged images
         uses: dataaxiom/ghcr-cleanup-action@v1

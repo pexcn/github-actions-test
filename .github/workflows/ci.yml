@@ -57,11 +57,11 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       # cleanup
-      - name: Cleanup untagged images
-        uses: dataaxiom/ghcr-cleanup-action@v1
-        with:
-          delete-untagged: true
-          delete-ghost-images: true
+      #- name: Cleanup untagged images
+        #uses: dataaxiom/ghcr-cleanup-action@v1
+        #with:
+          #delete-untagged: true
+          #delete-ghost-images: true
           #delete-partial-images: true
           #delete-orphaned-images: true
 

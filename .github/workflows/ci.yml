@@ -66,7 +66,7 @@ jobs:
           platforms: ${{ matrix.TARGET_PLATFORMS }}
           push: true
           provenance: false
-          #sbom: false
+          sbom: false
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 

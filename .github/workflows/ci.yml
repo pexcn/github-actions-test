@@ -56,15 +56,6 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # cleanup
-      #- name: Cleanup untagged images
-        #uses: dataaxiom/ghcr-cleanup-action@v1
-        #with:
-          #delete-untagged: true
-          #delete-ghost-images: true
-          #delete-partial-images: true
-          #delete-orphaned-images: true
-
       # build
       - name: Build image and Push to Container Registries
         uses: docker/build-push-action@v5
@@ -78,3 +69,12 @@ jobs:
           #sbom: false
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
+
+      # cleanup
+      - name: Cleanup untagged images
+        uses: dataaxiom/ghcr-cleanup-action@v1
+        with:
+          delete-untagged: true
+          delete-ghost-images: true
+          delete-partial-images: true
+          delete-orphaned-images: true

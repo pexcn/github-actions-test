@@ -56,7 +56,7 @@ jobs:
           delete-untagged: true
           delete-ghost-images: true
           delete-partial-images: true
-          delete-orphaned-images: true
+          #delete-orphaned-images: true
 
       # build
       - name: Build image and Push to Container Registries

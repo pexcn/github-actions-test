@@ -74,7 +74,7 @@ jobs:
             ghcr.io/${{ github.repository }}:${{ env.BUILD_TAG }}
           platforms: ${{ matrix.TARGET_PLATFORMS }}
           push: true
-          provenance: false
+          #provenance: false
           #sbom: false
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache

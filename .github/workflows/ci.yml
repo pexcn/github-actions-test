@@ -15,12 +15,13 @@ jobs:
     outputs:
       matrix-build: ${{ steps.neo-library.outputs.matrix }}
     steps:
-      - name: Generate matrix | Library
+      - name: Generate matrix
         id: neo-library
         uses: hellofresh/action-changed-files@v3
         with:
             pattern: net/
             default-patterns: |
+                .github/**
                 net/
 
   build:

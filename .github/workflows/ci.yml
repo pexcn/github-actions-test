@@ -25,6 +25,7 @@ jobs:
 
   build:
     needs: [ generate-matrix ]
+    runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJson(needs.generate-matrix.outputs.matrix-build) }}
     if: ${{ fromJson(needs.generate-matrix.outputs.matrix-build).include[0] }}

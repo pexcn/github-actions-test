@@ -19,8 +19,7 @@ jobs:
         id: neo-library
         uses: hellofresh/action-changed-files@v3
         with:
-            pattern: net/
-            default-patterns: |
+            patterns: |
                 .github/**
                 net/
 
@@ -32,4 +31,4 @@ jobs:
     if: ${{ fromJson(needs.generate-matrix.outputs.matrix-build).include[0] }}
     steps:
         - name: Building library
-          run: echo "Building ${{ matrix.lib }}"
+          run: echo "Building ${{ matrix.build }}"

@@ -17,7 +17,6 @@ jobs:
   generate-matrix:
     name: Generate job matrices
     runs-on: ubuntu-latest
-    # don't forget to declare outputs here!
     outputs:
       matrix-infrastructure: ${{ steps.neo-infrastructure.outputs.matrix }}
       matrix-library: ${{ steps.neo-library.outputs.matrix }}
@@ -38,15 +37,6 @@ jobs:
             pattern: library/(?P<lib>(?!common)[^/]+)
             default-patterns: |
                 library/common
-
-  infrastructure:
-    needs: [ generate-matrix ] # don't forget this!
-    strategy:
-      matrix: ${{ fromJson(needs.generate-matrix.outputs.matrix-infrastructure) }}
-    if: ${{ fromJson(needs.generate-matrix.outputs.matrix-infrastructure).include[0] }} # skip if the matrix is empty!
-    steps:
-        - name: Deploy infrastructure
-          run: echo "Deploying ${{ matrix.environment }}"
 
   build:
     needs: [ generate-matrix ]

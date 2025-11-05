@@ -26,7 +26,7 @@ jobs:
         id: neo-infrastructure
         uses: hellofresh/action-changed-files@v3
         with:
-            pattern: infrastructure/(?P<environment>[^/]+)
+            pattern: net/
             default-patterns: |
                 terraform-modules
                 deploy.sh
@@ -35,7 +35,7 @@ jobs:
         id: neo-library
         uses: hellofresh/action-changed-files@v3
         with:
-            pattern: library/(?P<lib>(?!common)[^/]+)
+            pattern: net/
             default-patterns: |
                 library/common
 

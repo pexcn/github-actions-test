@@ -17,3 +17,4 @@ if [ "$CHILLING_EFFECT" = 1 ]; then
 else
   exec "$@"
 fi
+

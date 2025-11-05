@@ -13,7 +13,7 @@ jobs:
     name: Generate job matrices
     runs-on: ubuntu-latest
     outputs:
-      matrix-library: ${{ steps.neo-library.outputs.matrix }}
+      matrix-build: ${{ steps.neo-library.outputs.matrix }}
     steps:
       - name: Generate matrix | Library
         id: neo-library

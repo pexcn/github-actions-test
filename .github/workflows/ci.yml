@@ -19,9 +19,7 @@ jobs:
         id: neo-library
         uses: hellofresh/action-changed-files@v3
         with:
-            patterns: |
-                .github/**
-                net/
+            patterns: '^(?P<BUILD_CONTEXT>(?:buildbot|civ|dev|net|utils|.github)/[^/]+)/'
 
   build:
     needs: [ generate-matrix ]

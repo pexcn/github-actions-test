@@ -35,7 +35,7 @@ jobs:
           #escape_json: false
 
       - name: List all changed files
-        run: echo '${{ steps.detect-changes.outputs.matrix }}'
+        run: echo '${{ steps.detect-changes.outputs.all_changed_files }}'
 
   build:
     name: Run Build
@@ -43,7 +43,7 @@ jobs:
     needs: detect-changes
     strategy:
       matrix: 
-        files: ${{ fromJSON(needs.changed-files.outputs.matrix) }}
+        files: ${{ fromJSON(needs.detect-changes.outputs.matrix) }}
       max-parallel: 4
       fail-fast: false
     steps:

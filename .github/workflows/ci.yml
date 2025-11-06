@@ -10,11 +10,10 @@ on:
 
 jobs:
   detect-changes:
-    name: Generate job matrices
+    name: Get changes
     runs-on: ubuntu-24.04
     outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
-      has-changes: ${{ steps.set-matrix.outputs.has-changes }}
+      matrix: ${{ steps.detect-changes.outputs.all_changed_files }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -25,6 +24,7 @@ jobs:
         id: neo-library
         uses: tj-actions/changed-files@v47
         with:
+          matrix: true
           files_ignore: |
             ext/**
             **.md
@@ -33,13 +33,3 @@ jobs:
           dir_names_max_depth: 2
           json: true
           escape_json: false
-
-  build:
-    needs: detect-changes
-    runs-on: ubuntu-24.04
-    strategy:
-      matrix: ${{ fromJson(needs.detect-changes.outputs.matrix) }}
-    if: ${{ fromJson(needs.detect-changes.outputs.matrix).include[0] }}
-    steps:
-        - name: Building library
-          run: echo "Building ${{ matrix.build }}"

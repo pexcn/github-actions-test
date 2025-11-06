@@ -24,7 +24,7 @@ jobs:
         id: neo-library
         uses: tj-actions/changed-files@v47
         with:
-          matrix: true
+          #matrix: true
           files_ignore: |
             ext/**
             **.md

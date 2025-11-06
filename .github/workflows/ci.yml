@@ -16,6 +16,11 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
       has-changes: ${{ steps.set-matrix.outputs.has-changes }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Generate matrix
         id: neo-library
         uses: tj-actions/changed-files@v47

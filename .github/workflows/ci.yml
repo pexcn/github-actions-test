@@ -9,24 +9,32 @@ on:
   workflow_dispatch:
 
 jobs:
-  generate-matrix:
+  detect-changes:
     name: Generate job matrices
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
-      matrix-build: ${{ steps.neo-library.outputs.matrix }}
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+      has-changes: ${{ steps.set-matrix.outputs.has-changes }}
     steps:
       - name: Generate matrix
         id: neo-library
-        uses: hellofresh/action-changed-files@v3
+        uses: tj-actions/changed-files@v47
         with:
-            patterns: '^(?P<BUILD_CONTEXT>(?:buildbot|civ|dev|net|utils|.github)/[^/]+)/'
+          files_ignore: |
+            ext/**
+            **.md
+            **/docker-compose.yml
+          dir_names: true
+          dir_names_max_depth: 2
+          json: true
+          escape_json: false
 
   build:
-    needs: [ generate-matrix ]
-    runs-on: ubuntu-latest
+    needs: detect-changes
+    runs-on: ubuntu-24.04
     strategy:
-      matrix: ${{ fromJson(needs.generate-matrix.outputs.matrix-build) }}
-    if: ${{ fromJson(needs.generate-matrix.outputs.matrix-build).include[0] }}
+      matrix: ${{ fromJson(needs.detect-changes.outputs.matrix) }}
+    if: ${{ fromJson(needs.detect-changes.outputs.matrix).include[0] }}
     steps:
         - name: Building library
           run: echo "Building ${{ matrix.build }}"

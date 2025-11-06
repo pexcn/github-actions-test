@@ -10,7 +10,7 @@ on:
 
 jobs:
   detect-changes:
-    name: Get changes
+    name: Detect changes
     runs-on: ubuntu-24.04
     outputs:
       matrix: ${{ steps.detect-changes.outputs.all_changed_files }}
@@ -35,4 +35,20 @@ jobs:
           #escape_json: false
 
       - name: List all changed files
-        run: echo '${{ steps.detect-changes.outputs.all_changed_files }}'
+        run: echo '${{ steps.detect-changes.outputs.matrix }}'
+
+  build:
+    name: Run Build
+    runs-on: ubuntu-24.04
+    needs: detect-changes
+    strategy:
+      matrix: 
+        files: ${{ fromJSON(needs.changed-files.outputs.matrix) }}
+      max-parallel: 4
+      fail-fast: false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Test
+        run: |
+          echo ${{ matrix.files }}

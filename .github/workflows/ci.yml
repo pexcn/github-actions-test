@@ -89,9 +89,9 @@ jobs:
     #  cancel-in-progress: true
     env:
       TZ: Asia/Taipei
-    #strategy:
-    #  fail-fast: false
-    #  matrix: ${{ fromJSON(needs.generate-matrix.outputs.matrix) }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.generate-matrix.outputs.matrix) }}
     steps:
       - name: Show output
         run: |

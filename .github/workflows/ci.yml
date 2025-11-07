@@ -2,15 +2,11 @@ name: Build
 
 on:
   push:
-    paths-ignore:
-      - 'ext/**'
-      - '**.md'
-      - '**/docker-compose.yml'
   workflow_dispatch:
 
 jobs:
-  detect-changes:
-    name: Detect changes
+  generate-matrix:
+    name: Generate matrix
     runs-on: ubuntu-24.04
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
@@ -18,17 +14,7 @@ jobs:
     env:
       TZ: Asia/Taipei
     outputs:
-      matrix: ${{ steps.detect-changes.outputs.all_changed_files }}
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          # bookworm
-          - BUILD_CONTEXT: buildbot/bookworm
-            TARGET_PLATFORMS: linux/amd64
-          # bookworm-android
-          - BUILD_CONTEXT: buildbot/bookworm-android
-            TARGET_PLATFORMS: linux/amd64
+      matrix: ${{ steps.create-matrix.outputs.matrix_json }}
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -49,11 +35,33 @@ jobs:
           dir_names_max_depth: 2
           matrix: true
 
-      - name: Dump GitHub context
+      - name: Create matrix
+        id: create-matrix
         run: |
-          cat << 'EOF'
-          ${{ toJSON(matrix) }}
-          EOF
+          matrix_json=$(jq -n --argjson ctxs "${{ steps.detect-changes.outputs.all_changed_files }}" '
+            {
+              include: [
+                $ctxs[] | . as $ctx | {
+                  BUILD_CONTEXT: $ctx,
+                  TARGET_PLATFORMS: (
+                    if (
+                      [
+                        "buildbot/bookworm",
+                        "buildbot/bookworm-android",
+                        "buildbot/bookworm-openwrt"
+                      ] | index($ctx)
+                    ) != null
+                    then
+                      "linux/amd64"
+                    else
+                      "linux/amd64,linux/arm64"
+                    end
+                  )
+                }
+              ]
+            }
+          ')
+          echo "matrix_json=$matrix_json" >> $GITHUB_OUTPUT
 
       - name: Show changes
-        run: echo ${{ steps.detect-changes.outputs.all_changed_files }}
+        run: echo ${{ steps.create-matrix.outputs.matrix_json }}

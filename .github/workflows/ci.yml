@@ -38,9 +38,7 @@ jobs:
       - name: Create matrix
         id: create-matrix
         run: |
-          changed='${{ steps.detect-changes.outputs.all_changed_files }}'
-          contexts=$(jq -r '.[]' <<<"$changed")
-          matrix_json=$(jq -c -n --argjson ctxs "$(jq -R -s -c 'split("\n")[:-1]' <<<"$contexts")" '
+          matrix_json=$(jq -c -n --argjson ctxs "${{ steps.detect-changes.outputs.all_changed_files }}" '
             {
               include: [
                 $ctxs[] | . as $ctx | {

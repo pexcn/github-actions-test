@@ -12,43 +12,32 @@ jobs:
   detect-changes:
     name: Detect changes
     runs-on: ubuntu-24.04
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+    env:
+      TZ: Asia/Taipei
     outputs:
       matrix: ${{ steps.detect-changes.outputs.all_changed_files }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
-      - name: Generate matrix
+      - name: Detect changes
         id: detect-changes
         uses: tj-actions/changed-files@v47
         with:
           files_ignore: |
+            _deprecated/**
             ext/**
             **.md
             **/docker-compose.yml
+            *
           dir_names: true
           dir_names_max_depth: 2
           matrix: true
-          #json: true
-          #escape_json: false
 
-      - name: List all changed files
-        run: echo '${{ steps.detect-changes.outputs.all_changed_files }}'
-
-  build:
-    name: Run Build
-    runs-on: ubuntu-24.04
-    needs: detect-changes
-    strategy:
-      matrix: 
-        files: ${{ fromJSON(needs.detect-changes.outputs.matrix) }}
-      max-parallel: 4
-      fail-fast: false
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Test
-        run: |
-          echo ${{ matrix.files }}
+      - name: Show changes
+        run: echo ${{ steps.detect-changes.outputs.all_changed_files }}

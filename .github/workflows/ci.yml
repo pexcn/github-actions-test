@@ -56,8 +56,8 @@ jobs:
           global_build=${{ github.event.inputs.global == true }}
 
           # override as global build
-          if jq -e 'any(startswith(".github/"))' <<< "$changed_files" >/dev/null
-            || [ "$global_build" == true ]; then
+          if jq -e 'any(startswith(".github/"))' <<< "$changed_files" >/dev/null \
+            || [ "$global_build" = true ]; then
             changed_files=$(
               # find build context dirs
               find . -mindepth 2 -maxdepth 2 -type d ! -path './.*' -prune -printf '%P\n' |

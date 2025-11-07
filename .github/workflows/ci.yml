@@ -55,6 +55,7 @@ jobs:
       - name: Create matrix
         id: create-matrix
         run: |
+          echo ${{ github.event.inputs.global }}
           changed_files='${{ steps.detect-changes.outputs.all_changed_files }}'
           global_build=${{ github.event.inputs.global == true }}
 

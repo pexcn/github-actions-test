@@ -82,16 +82,17 @@ jobs:
 
   build-and-push:
     #if: "!contains(github.event.head_commit.message, 'do-not-build')"
+    needs: generate-matrix
     runs-on: ubuntu-24.04
     concurrency:
       group: ${{ matrix.BUILD_CONTEXT }}
       cancel-in-progress: true
     env:
       TZ: Asia/Taipei
-    strategy:
-      fail-fast: false
-      matrix:
-        include: ${{ fromJSON(needs.generate-matrix.outputs.matrix) }}
+    #strategy:
+    #  fail-fast: false
+    #  matrix: ${{ fromJSON(needs.generate-matrix.outputs.matrix) }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v5
+      - name: Show output
+        run: |
+          echo "Got: ${{ needs.generate-matrix.outputs.matrix }}"

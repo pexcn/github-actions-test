@@ -2,7 +2,21 @@ name: Build
 
 on:
   push:
+    paths-ignore:
+      - 'ext/**'
+      - '**.md'
+      - '**/docker-compose.yml'
   workflow_dispatch:
+    inputs:
+      global:
+        description: 'Whether to build globally'
+        required: false
+        type: boolean
+        default: false
+      deploy:
+        description: 'Whether to deploy DockerHub and GHCR'
+        required: true
+        default: '0'
 
 jobs:
   generate-matrix:
@@ -41,7 +55,8 @@ jobs:
           changed_files='${{ steps.detect-changes.outputs.all_changed_files }}'
 
           # override as global build
-          if jq -e 'any(startswith(".github/"))' <<< "$changed_files" >/dev/null; then
+          if jq -e 'any(startswith(".github/"))' <<< "$changed_files" >/dev/null
+            || ${{ github.event.inputs.global == true }}; then
             changed_files=$(
               # find build context dirs
               find . -mindepth 2 -maxdepth 2 -type d ! -path './.*' -prune -printf '%P\n' |
@@ -77,22 +92,18 @@ jobs:
           ')
           echo "matrix_json=$matrix_json" >> $GITHUB_OUTPUT
 
-      - name: Show changes
-        run: echo ${{ steps.create-matrix.outputs.matrix_json }}
-
   build-and-push:
-    #if: "!contains(github.event.head_commit.message, 'do-not-build')"
     needs: generate-matrix
     runs-on: ubuntu-24.04
-    #concurrency:
-    #  group: ${{ matrix.BUILD_CONTEXT }}
-    #  cancel-in-progress: true
+    concurrency:
+      group: ${{ matrix.BUILD_CONTEXT }}
+      cancel-in-progress: true
     env:
       TZ: Asia/Taipei
     strategy:
       fail-fast: false
       matrix: ${{ fromJSON(needs.generate-matrix.outputs.matrix) }}
     steps:
-      - name: Show output
-        run: |
-          echo "Got: ${{ needs.generate-matrix.outputs.matrix }}"
+      # prepare
+      - name: Checkout
+        uses: actions/checkout@v4

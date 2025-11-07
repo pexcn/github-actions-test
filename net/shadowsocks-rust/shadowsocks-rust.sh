@@ -1,5 +1,5 @@
 #!/bin/sh
-
+s
           changed_files='${{ steps.detect-changes.outputs.all_changed_files }}'
           changed_files_json=$(echo "$changed_files" | jq -Rc 'split(" ")')
           matrix_json=$(jq -c -n --argjson ctxs "$changed_files" '

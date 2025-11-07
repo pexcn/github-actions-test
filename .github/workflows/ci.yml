@@ -33,14 +33,26 @@ jobs:
             *
           dir_names: true
           dir_names_max_depth: 2
-          #matrix: true
+          matrix: true
 
       - name: Create matrix
         id: create-matrix
         run: |
-          find . -mindepth 2 -maxdepth 2 -type d
-          changes='${{ steps.detect-changes.outputs.all_changed_files }}'
-          matrix_json=$(jq -c -n --argjson ctxs "$changes" '
+          changed_files='${{ steps.detect-changes.outputs.all_changed_files }}'
+
+          # override as global build
+          if jq -e 'any(startswith(".github/"))' <<< "$changed_files" >/dev/null; then
+            changed_files=$(
+              # find build contexts
+              find . -mindepth 2 -maxdepth 2 -type d ! -path './.*' -prune -printf '%P\n' |
+                # convert to json array
+                jq -Rs 'split("\n")[:-1]' |
+                # remove unused dirs
+                jq '[.[] | select(startswith("_deprecated/") or startswith("ext/") | not)]'
+              )
+          fi
+
+          matrix_json=$(jq -c -n --argjson ctxs "$changed_files" '
             {
               include: [
                 $ctxs[] | . as $ctx | {

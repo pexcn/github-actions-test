@@ -38,7 +38,7 @@ jobs:
       - name: Create matrix
         id: create-matrix
         run: |
-          echo ${{ steps.detect-changes.outputs.all_changed_files }}
+          find . -mindepth 2 -maxdepth 2 -type d
           changes='${{ steps.detect-changes.outputs.all_changed_files }}'
           matrix_json=$(jq -c -n --argjson ctxs "$changes" '
             {

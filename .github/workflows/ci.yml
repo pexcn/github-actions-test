@@ -91,7 +91,8 @@ jobs:
       TZ: Asia/Taipei
     strategy:
       fail-fast: false
-      matrix: ${{ fromJSON(needs.generate-matrix.outputs.matrix) }}
+      matrix:
+        include: ${{ fromJSON(needs.generate-matrix.outputs.matrix) }}
     steps:
       - name: Show output
         run: |

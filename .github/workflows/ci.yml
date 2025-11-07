@@ -52,7 +52,7 @@ jobs:
       - name: Dump GitHub context
         run: |
           cat << 'EOF'
-          ${{ toJSON(github) }}
+          ${{ toJSON(matrix) }}
           EOF
 
       - name: Show changes

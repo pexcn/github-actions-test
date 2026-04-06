@@ -128,13 +128,6 @@ jobs:
           key: ${{ runner.os }}-${{ env.BUILD_TAG }}-buildx-${{ github.sha }}
           restore-keys: ${{ runner.os }}-${{ env.BUILD_TAG }}-buildx-
 
-      - name: Start ssh-agent and add key
-        shell: bash
-        run: |
-          eval "$(ssh-agent -s)"
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" | ssh-add -
-          echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK" >> $GITHUB_ENV
-
       - name: Build and push image
         uses: docker/build-push-action@v5
         if: ${{ github.event_name == 'push' }}

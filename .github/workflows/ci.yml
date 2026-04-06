@@ -137,7 +137,4 @@ jobs:
             ${{ github.repository }}:${{ env.BUILD_TAG }}
             ghcr.io/${{ github.repository }}:${{ env.BUILD_TAG }}
           platforms: ${{ matrix.TARGET_PLATFORMS }}
-          push: true
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
-          ssh: default=${{ env.SSH_AUTH_SOCK }}
+          push: false

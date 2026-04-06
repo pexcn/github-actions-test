@@ -138,3 +138,5 @@ jobs:
             ghcr.io/${{ github.repository }}:${{ env.BUILD_TAG }}
           platforms: ${{ matrix.TARGET_PLATFORMS }}
           push: false
+          secrets: |
+            IPINFO_TOKEN=${{ secrets.IPINFO_TOKEN }}
